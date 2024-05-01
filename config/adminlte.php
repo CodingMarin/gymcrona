@@ -154,9 +154,9 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
+    'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
     /*
@@ -318,13 +318,33 @@ return [
         ['header' => 'AREA DE GIMNASIO'],
         [
             'text' => 'Categorias',
-            'url' => 'gimnasio/categoria',
+            'url' => 'categoria',
             'icon' => 'fas fa-layer-group',
         ],
         [
             'text' => 'Promociones',
-            'url' => 'gimnasio/promocion',
+            'url' => 'promocion',
             'icon' => 'fas fa-tags',
+        ],
+        [
+            'text' => 'Metodos de Pago',
+            'url' => 'metodo_pago',
+            'icon' => 'fas fa-money-bill',
+        ],
+        [
+            'text' => 'Usuarios',
+            'url' => 'users',
+            'icon' => 'fas fa-user',
+        ],
+        [
+            'text' => 'Clientes',
+            'url' => 'cliente',
+            'icon' => 'fas fa-users',
+        ],
+        [
+            'text' => 'Inscripciones',
+            'url' => 'inscripcion',
+            'icon' => 'fas fa-address-card',
         ],
         ['header' => 'AREA DE VENTA'],
         [
