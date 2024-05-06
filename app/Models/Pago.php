@@ -9,20 +9,29 @@ class Pago extends Model
 {
     use HasFactory;
 
+    protected $table = 'pago';
+
     protected $fillable = [
         'metodo_id',
+        'servicio_id',
         'promocion_id',
-        'monto'
+        'monto',
+        'created_at',
     ];
 
     public function metodoPago()
     {
-        return $this->belongsTo(MetodoPago::class);
+        return $this->belongsTo(MetodoPago::class, 'metodo_id');
+    }
+
+    public function categoriaServicio()
+    {
+        return $this->belongsTo(CategoriaServicio::class, 'servicio_id');
     }
 
     public function promocionServicio()
     {
-        return $this->belongsTo(PromocionServicio::class);
+        return $this->belongsTo(PromocionServicio::class, 'promocion_id');
     }
 
     public function user()

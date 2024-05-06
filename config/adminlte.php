@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Sincrona',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -30,8 +30,8 @@ return [
     |
     */
 
-    'use_ico_only' => false,
-    'use_full_favicon' => false,
+    'use_ico_only' => true,
+    'use_full_favicon' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>GYM</b>System',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '<b>Sincrona</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/logo-sincrona-v1.svg',
+    'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'GYM System Logo',
+    'logo_img_alt' => 'Sincrona logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -89,7 +89,7 @@ return [
             'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
             'alt' => 'Auth Logo',
             'class' => '',
-            'width' => 50,
+            'width' => 60,
             'height' => 50,
         ],
     ],
@@ -113,7 +113,7 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/logo-sincrona-v1.svg',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -136,7 +136,7 @@ return [
     'usermenu_enabled' => true,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
+    'usermenu_image' => true,
     'usermenu_desc' => false,
     'usermenu_profile_url' => false,
 
@@ -298,17 +298,17 @@ return [
         [
             'type' => 'navbar-search',
             'text' => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type' => 'fullscreen-widget',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'buscar',
         ],
         [
             'text' => 'blog',
@@ -327,16 +327,6 @@ return [
             'icon' => 'fas fa-tags',
         ],
         [
-            'text' => 'Metodos de Pago',
-            'url' => 'metodo_pago',
-            'icon' => 'fas fa-money-bill',
-        ],
-        [
-            'text' => 'Usuarios',
-            'url' => 'users',
-            'icon' => 'fas fa-user',
-        ],
-        [
             'text' => 'Clientes',
             'url' => 'cliente',
             'icon' => 'fas fa-users',
@@ -348,68 +338,46 @@ return [
         ],
         ['header' => 'AREA DE VENTA'],
         [
+            'text' => 'Vender',
+            'url' => '',
+            'icon' => 'fas fa-shopping-cart'
+        ],
+        [
+            'text' => 'Ingresos',
+            'icon' => 'fas fa-dollar-sign',
+            'submenu' => [
+                [
+                    'text' => 'Inscripciones',
+                    'url' => 'inscripcion-ingresos',
+
+                ],
+                [
+                    'text' => 'Productos',
+                    'url' => 'producto-ingresos',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Metodos de Pago',
+            'url' => 'metodo-pago',
+            'icon' => 'fas fa-money-bill',
+        ],
+        ['header' => 'INVENTARIO'],
+        [
             'text' => 'Productos',
             'url' => 'producto',
             'icon' => 'fas fa-briefcase',
         ],
         [
-            'text' => 'Categorias',
-            'url' => 'producto/categoria',
-            'icon' => '',
+            'text' => 'Inventario',
+            'url' => 'inventario',
+            'icon' => 'fas fa-box-open',
         ],
+        ['header' => 'CONFIGURACION'],
         [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Mi Cuenta',
+            'icon' => 'fas fa-user',
+            'url' => 'users',
         ],
     ],
 
@@ -544,7 +512,7 @@ return [
             'close_all_other' => true,
             'scroll_left' => true,
             'scroll_right' => true,
-            'fullscreen' => true,
+            'fullscreen' => false,
         ],
         'options' => [
             'loading_screen' => 1000,

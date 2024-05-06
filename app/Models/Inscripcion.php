@@ -12,7 +12,12 @@ class Inscripcion extends Model
     protected $table = 'inscripcion';
 
     protected $fillable = [
+        'user_id',
         'numero_boleta',
+        'cliente_id',
+        'categoria_servicio_id',
+        'promocion_servicio_id',
+        'estado_id',
         'fecha_emision',
         'fecha_caducidad',
         'monto_costo',
@@ -22,22 +27,22 @@ class Inscripcion extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
     public function categoriaServicio()
     {
-        return $this->belongsTo(CategoriaServicio::class);
+        return $this->belongsTo(CategoriaServicio::class, 'categoria_servicio_id');
     }
     public function promocionServicio()
     {
-        return $this->belongsTo(PromocionServicio::class);
+        return $this->belongsTo(PromocionServicio::class, 'promocion_servicio_id');
     }
     public function estado()
     {
-        return $this->belongsTo(Estado::class);
+        return $this->belongsTo(Estado::class, 'estado_id');
     }
 }

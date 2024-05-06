@@ -12,15 +12,21 @@ class MetodoPago extends Model
     protected $table = 'metodo_pago';
 
     protected $fillable = [
-        'nombre',
         'descripcion'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function pago(){
+    public function pago()
+    {
         return $this->hasMany(Pago::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 }

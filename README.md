@@ -64,3 +64,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Generar Clave de Aplicación
+
+Para generar una nueva clave de aplicación en Laravel, ejecuta el siguiente comando en tu terminal:
+
+```bash
+php artisan key:generate
+

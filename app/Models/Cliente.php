@@ -16,15 +16,17 @@ class Cliente extends Model
         'nombres',
         'ap_paterno',
         'ap_materno',
-        'telefono'
+        'telefono',
+        'email'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function inscripcion(){
+    public function inscripcion()
+    {
         return $this->hasMany(Inscripcion::class);
     }
-
 }

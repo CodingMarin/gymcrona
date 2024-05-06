@@ -12,15 +12,18 @@ class CategoriaServicio extends Model
     protected $table = 'categoria_servicio';
 
     protected $fillable = [
+        'user_id',
         'nombre',
         'descripcion'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function inscripcion(){
+    public function inscripcion()
+    {
         return $this->hasMany(Inscripcion::class);
     }
 }

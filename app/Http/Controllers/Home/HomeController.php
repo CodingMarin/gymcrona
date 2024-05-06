@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cliente;
+use App\Models\Inscripcion;
+use App\Models\Producto;
+use App\Models\PromocionServicio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,6 +29,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user_id = Auth::id();
+        $productos = Producto::where('user_id', $user_id)->count();
+        $clientes = Cliente::where('user_id', $user_id)->count();
+        $promociones = PromocionServicio::where('user_id', $user_id)->count();
+        $inscripciones = Inscripcion::where('user_id', $user_id)->count();
+
+        return view('home', compact('clientes', 'productos', 'inscripciones', 'promociones'));
     }
 }
