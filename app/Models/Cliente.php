@@ -12,6 +12,8 @@ class Cliente extends Model
     protected $table = 'cliente';
 
     protected $fillable = [
+        'id',
+        'user_id',
         'dni',
         'nombres',
         'ap_paterno',
@@ -22,11 +24,6 @@ class Cliente extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function inscripcion()
-    {
-        return $this->hasMany(Inscripcion::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

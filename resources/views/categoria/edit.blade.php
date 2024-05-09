@@ -29,21 +29,21 @@
                             @method('PUT')
                             <div class="row">
                                 <!-- Nombre -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="nombre" class="form-label">Nombre:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="nombre" class="form-label font-sm fw-600">Nombre:</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
                                         placeholder="Nombre" value="{{ $categoria->nombre }}" required />
                                 </div>
                                 <!-- Descripcion -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="descripcion" class="form-label">Descripcion:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="descripcion" class="form-label font-sm fw-600">Descripcion:</label>
                                     <input type="text" class="form-control" id="descripcion" name="descripcion"
                                         placeholder="Descripcion" value="{{ $categoria->descripcion }}" required />
                                 </div>
                             </div>
                             <div class="text-end modal-footer">
                                 <button type="submit" class="btn btn-outline-success btn-sm">
-                                    Actualizar
+                                    Actualizar registro
                                 </button>
                             </div>
                         </form>
@@ -52,4 +52,24 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('css')
+    <style>
+        .font-sm {
+            font-size: 0.938rem !important;
+        }
+
+        .fw-500 {
+            font-weight: 500 !important;
+        }
+
+        .fw-600 {
+            font-weight: 600 !important;
+        }
+
+        .text-light-dark {
+            color: #172B4D;
+        }
+    </style>
 @endsection

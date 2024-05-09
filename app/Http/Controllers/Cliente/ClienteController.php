@@ -14,10 +14,10 @@ class ClienteController extends Controller
     public function index()
     {
         $userId = Auth::id();
+        $totalClientes = Cliente::where('user_id', $userId)->count();
         $clientes = Cliente::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(7);
-        $totalClientes = Cliente::all()->count();
 
         return view('cliente.index', compact('clientes', 'totalClientes'));
     }

@@ -12,18 +12,21 @@ class Producto extends Model
     protected $table = 'producto';
 
     protected $fillable = [
+        'id',
         'nombre',
         'descripcion',
         'precio',
         'stock',
         'marca',
         'foto_url',
+        'user_id',
+        'categoria_id',
         'estado'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function categoriaProducto()

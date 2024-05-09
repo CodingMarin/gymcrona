@@ -12,7 +12,7 @@ class PromocionServicioController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $totalPromociones = PromocionServicio::all()->count();
+        $totalPromociones = PromocionServicio::where('user_id', $userId)->count();
         $promociones = PromocionServicio::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(7);
