@@ -12,6 +12,7 @@ class PromocionServicio extends Model
 
     protected $fillable = [
         'id',
+        'user_id',
         'nombre',
         'descripcion',
         'precio'
@@ -19,11 +20,6 @@ class PromocionServicio extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function inscripcion()
-    {
-        return $this->hasMany(Inscripcion::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

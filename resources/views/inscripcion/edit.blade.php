@@ -28,6 +28,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
+
                                 <!-- Número de boleta -->
                                 <div class="col-md-6 mb-3">
                                     <label for="numero_boleta" class="form-label">N° Boleta (Opcional):</label>
@@ -35,85 +36,105 @@
                                         placeholder="Número de boleta" maxlength="11"
                                         value="{{ $inscripcion->numero_boleta }}" />
                                 </div>
+
                                 <!-- Cliente -->
                                 <div class="col-md-6 mb-3">
                                     <label for="cliente_id" class="form-label">Cliente:</label>
-                                    <select class="custom-select form-select form-select-lg" id="cliente_id"
-                                        name="cliente_id" required>
-                                        @foreach ($clientes as $cliente)
-                                            <option value="{{ $cliente->id }}"
-                                                @if ($inscripcion->cliente_id == $cliente->id) selected @endif>{{ $cliente->nombres }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+
+                                    <!-- Cliente id -->
+                                    <input type="hidden" class="form-control" id="cliente_id" name="cliente_id"
+                                        value="{{ $inscripcion->cliente->id }}">
+
+                                    <!-- Nombre cliente -->
+                                    <input type="text" class="form-control" value="{{ $inscripcion->cliente->nombres }}"
+                                        readonly>
                                 </div>
+
                                 <!-- Servicio -->
                                 <div class="col-md-6 mb-3">
                                     <label for="servicio_id" class="form-label">Servicio:</label>
-                                    <select class="custom-select form-select form-select-lg" id="servicio_id"
-                                        name="servicio_id" required>
-                                        @foreach ($categoriasServicio as $categoria)
-                                            <option value="{{ $categoria->id }}"
-                                                @if ($inscripcion->servicio_id == $categoria->id) selected @endif>{{ $categoria->nombre }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+
+                                    <!-- Servicio id -->
+                                    <input type="hidden" class="form-control" id="servicio_id" name="servicio_id"
+                                        value="{{ $inscripcion->categoriaServicio->id }}">
+
+                                    <!-- Nombre servicio -->
+                                    <input type="text" class="form-control"
+                                        value="{{ $inscripcion->categoriaServicio->nombre }}" readonly>
                                 </div>
                                 <!-- Promoción -->
                                 <div class="col-md-6 mb-3">
                                     <label for="promocion_id" class="form-label">Promoción:</label>
-                                    <select class="custom-select form-select form-select-lg" name="promocion_id"
-                                        id="promocion_id" required>
-                                        @foreach ($promocionServicio as $promocion)
-                                            <option value="{{ $promocion->id }}"
-                                                @if ($inscripcion->promocion_id == $promocion->id) selected @endif>{{ $promocion->nombre }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+
+                                    <!-- Promocion id -->
+                                    <input type="hidden" class="form-control" id="promocion_id" name="promocion_id"
+                                        value="{{ $inscripcion->promocionServicio->id }}">
+
+                                    <!-- Promocion nombre -->
+                                    <input type="text" class="form-control"
+                                        value="{{ $inscripcion->promocionServicio->nombre }}" readonly>
                                 </div>
+
                                 <!-- Fecha de emisión -->
                                 <div class="col-md-6 mb-3">
                                     <label for="fecha_emision" class="form-label">Fecha de emisión:</label>
                                     <input type="date" class="form-control" id="fecha_emision" name="fecha_emision"
                                         value="{{ $inscripcion->fecha_emision }}" readonly />
                                 </div>
+
                                 <!-- Fecha de caducidad -->
                                 <div class="col-md-6 mb-3">
                                     <label for="fecha_caducidad" class="form-label">Fecha de caducidad:</label>
                                     <input type="date" class="form-control" id="fecha_caducidad" name="fecha_caducidad"
                                         value="{{ $inscripcion->fecha_caducidad }}" required />
                                 </div>
+
                                 <!-- Precio -->
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="monto_costo" class="form-label">Precio de la Inscripción (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_costo"
-                                        name="monto_costo" placeholder="Precio de inscripción"
-                                        value="{{ $inscripcion->monto_costo }}" required readonly />
+                                        name="monto_costo" value="{{ $inscripcion->monto_costo }}" required readonly />
                                 </div>
+
                                 <!-- Monto Pagado -->
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="monto_pago" class="form-label">Monto Pagado (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_pago"
-                                        name="monto_pago" placeholder="Monto cancelado" onchange="calcularDeuda()"
-                                        value="{{ $inscripcion->monto_pago }}" required />
+                                        name="monto_pago" value="{{ $inscripcion->monto_pago }}" readonly />
                                 </div>
+
+                                <!-- Monto de Deuda -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="monto_deuda" class="form-label text-danger">Monto de Deuda (S/.):</label>
+                                    <input type="number" step="0.01" class="form-control" id="monto_deuda"
+                                        name="monto_deuda" value="{{ $inscripcion->monto_deuda }}" readonly />
+                                </div>
+
+                                <!--  de Deuda -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="pago_actual" class="form-label text-success">Pago actual (S/.):</label>
+                                    <input type="number" step="0.01" class="form-control" id="pago_actual"
+                                        name="pago_actual" placeholder="0.00" onchange="calcularDeuda()" />
+                                </div>
+
                                 <!-- Método de Pago -->
                                 <div class="col-md-6 mb-3">
                                     <label for="metodo_pago_id" class="form-label">Método de Pago:</label>
                                     <select class="custom-select form-select form-select-lg" id="metodo_pago_id"
                                         name="metodo_pago_id" required>
-                                        @foreach ($metodoPago as $metodo)
-                                            <option value="{{ $metodo->id }}"
-                                                @if ($inscripcion->metodo_pago_id == $metodo->id) selected @endif>
-                                                {{ $metodo->brand->nombre }}</option>
+                                        @foreach ($metodoPago as $pago)
+                                            <option value="{{ $pago->id }}"
+                                                @if ($inscripcion->metodo_pago_id == $pago->id) selected @endif>
+                                                {{ $pago->brand->nombre }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
+
                                 <!-- Estado -->
                                 <div class="col-md-6 mb-3">
                                     <label for="estado_id" class="form-label">Estado de Inscripción:</label>
-                                    <select class="custom-select form-select form-select-lg" id="estado_id" name="estado_id"
-                                        required>
+                                    <select class="custom-select form-select form-select-lg" name="estado_id">
                                         @foreach ($estadoInscripcion as $estado)
                                             <option value="{{ $estado->id }}"
                                                 @if ($inscripcion->estado_id == $estado->id) selected @endif>{{ $estado->nombre }}
@@ -121,19 +142,32 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <!-- Monto de Deuda -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="monto_deuda" class="form-label">Monto de Deuda (S/.):</label>
-                                    <input type="number" step="0.01" class="form-control" id="monto_deuda"
-                                        name="monto_deuda" placeholder="Deuda" value="{{ $inscripcion->monto_deuda }}"
-                                        required />
-                                </div>
                             </div>
                             <div class="text-end modal-footer">
                                 <button type="submit" class="btn btn-outline-primary btn-sm">Guardar Cambios</button>
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Notificación Modal -->
+    <div class="modal fade" id="notificacionModal" tabindex="-1" role="dialog"
+        aria-labelledby="notificacionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary">Notificación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="mensaje"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -163,24 +197,37 @@
 @section('js')
     <script>
         function calcularDeuda() {
+            //////////////////Funcion//////////////
             const precioInscripcion = parseFloat(document.getElementById('monto_costo').value);
             const montoPagado = parseFloat(document.getElementById('monto_pago').value);
+            const pagoActual = parseFloat(document.getElementById('pago_actual').value);
+            const deuda = parseFloat(document.getElementById('monto_deuda').value);
 
-            let deuda = precioInscripcion - montoPagado;
-
-            if (montoPagado === precioInscripcion) {
-                deuda = 0;
-                document.getElementById('monto_deuda').readOnly = true;
-            } else {
-                document.getElementById('monto_deuda').readOnly = false;
+            if (isNaN(precioInscripcion) || isNaN(montoPagado) || isNaN(pagoActual) || isNaN(deuda)) {
+                console.error('Alguno de los valores no es un número válido.');
+                return;
             }
 
-            document.getElementById('monto_deuda').value = deuda;
-
-            if (montoPagado > precioInscripcion) {
-                document.getElementById('mensaje').innerText =
-                    'El monto pagado no puede ser mayor al precio de la inscripción.';
+            if (pagoActual > deuda) {
+                document.getElementById('mensaje').innerText = 'El pago actual no debe superar la deuda.';
                 $('#notificacionModal').modal('show');
+                document.getElementById('pago_actual').value = (0).toFixed(2);
+
+            } else if (pagoActual < 0) {
+                document.getElementById('mensaje').innerText = 'Por favor inserte un valor válido';
+                $('#notificacionModal').modal('show');
+                document.getElementById('pago_actual').value = 0;
+            } else {
+                let montoTotalPagado = 0;
+
+                if (montoPagado >= precioInscripcion || montoPagado === precioInscripcion) {
+                    document.getElementById('pago_actual').readOnly = true;
+                } else {
+                    montoTotalPagado = montoPagado + pagoActual
+                    document.getElementById('monto_deuda').value = deuda - pagoActual;
+                    document.getElementById('monto_pago').value = montoTotalPagado.toFixed(2);
+                }
+
             }
         }
         calcularDeuda();

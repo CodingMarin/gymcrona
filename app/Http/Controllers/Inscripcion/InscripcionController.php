@@ -70,6 +70,7 @@ class InscripcionController extends Controller
         $inscripcion = Inscripcion::where('user_id', $userId)->findOrFail($id);
         $promocionServicio = PromocionServicio::where('user_id', $userId)->get();
         $categoriasServicio = CategoriaServicio::where('user_id', $userId)->get();
+
         return view(
             'inscripcion.edit',
             compact([
@@ -83,49 +84,46 @@ class InscripcionController extends Controller
         );
     }
 
+
     public function update(Request $request, $id)
     {
         $userId = Auth::id();
 
         $request->validate([
-            'numero_boleta' => 'nullable|string|max:11',
-            'cliente_id' => 'required|exists:cliente,id',
+            'numero_boleta' => 'nullable|string|max:20',
             'servicio_id' => 'required|exists:categoria_servicio,id',
             'promocion_id' => 'nullable|exists:promocion_servicio,id',
             'estado_id' => 'required|exists:estado,id',
-            'fecha_emision' => 'required|date',
             'fecha_caducidad' => 'required|date',
-            'monto_costo' => 'required|numeric',
             'monto_pago' => 'nullable|numeric',
             'monto_deuda' => 'nullable|numeric',
             'metodo_pago_id' => 'nullable|exists:metodo_pago,id',
+            'pago_actual' => 'nullable|numeric'
         ]);
 
-        $inscripcion = Inscripcion::where('user_id', $userId)->findOrFail($id);
-        $inscripcion->numero_boleta = $request->numero_boleta ?? '000';
-        $inscripcion->cliente_id = $request->cliente_id;
-        $inscripcion->categoria_servicio_id = $request->servicio_id;
-        $inscripcion->promocion_servicio_id = $request->promocion_id;
-        $inscripcion->estado_id = $request->estado_id;
-        $inscripcion->fecha_emision = $request->fecha_emision;
-        $inscripcion->fecha_caducidad = $request->fecha_caducidad;
-        $inscripcion->monto_costo = $request->monto_costo;
-        $inscripcion->monto_pago = $request->monto_pago;
-        $inscripcion->monto_deuda = $request->monto_deuda;
-
-        $inscripcion->save();
+        Inscripcion::superUpdate(
+            $id,
+            $userId,
+            $request->numero_boleta,
+            $request->servicio_id,
+            $request->promocion_id,
+            $request->metodo_pago_id,
+            $request->estado_id,
+            $request->fecha_caducidad,
+            $request->monto_pago,
+            $request->monto_deuda
+        );
 
         $pago = new Pago();
         $pago->user_id = $userId;
         $pago->metodo_id = $request->metodo_pago_id;
         $pago->servicio_id = $request->servicio_id;
         $pago->promocion_id = $request->promocion_id;
-        $pago->monto = $request->monto_pago;
+        $pago->monto = $request->pago_actual;
         $pago->save();
 
-        return redirect()->route('inscripcion.index')->with('success', 'Inscripción de ' . $inscripcion->cliente->nombres . ' actualizada exitosamente.');
+        return redirect()->route('inscripcion.index')->with('success', 'Inscripción actualizada exitosamente.');
     }
-
 
     public function store(Request $request)
     {
@@ -137,13 +135,13 @@ class InscripcionController extends Controller
             'cliente_id' => 'required|exists:cliente,id',
             'servicio_id' => 'required|exists:categoria_servicio,id',
             'promocion_id' => 'nullable|exists:promocion_servicio,id',
+            'metodo_pago_id' => 'nullable|exists:metodo_pago,id',
             'estado_id' => 'required|exists:estado,id',
             'fecha_emision' => 'required|date',
             'fecha_caducidad' => 'required|date',
             'monto_costo' => 'required|numeric',
             'monto_pago' => 'nullable|numeric',
             'monto_deuda' => 'nullable|numeric',
-            'metodo_pago_id' => 'nullable|exists:metodo_pago,id',
         ]);
 
         $inscripcion = new Inscripcion();
@@ -152,6 +150,7 @@ class InscripcionController extends Controller
         $inscripcion->cliente_id = $request->cliente_id;
         $inscripcion->categoria_servicio_id = $request->servicio_id;
         $inscripcion->promocion_servicio_id = $request->promocion_id;
+        $inscripcion->metodo_pago_id = $request->metodo_pago_id;
         $inscripcion->estado_id = $request->estado_id;
         $inscripcion->fecha_emision = $request->fecha_emision;
         $inscripcion->fecha_caducidad = $request->fecha_caducidad;

@@ -12,6 +12,7 @@ class Pago extends Model
     protected $table = 'pago';
 
     protected $fillable = [
+        'id',
         'metodo_id',
         'servicio_id',
         'promocion_id',
@@ -36,6 +37,6 @@ class Pago extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

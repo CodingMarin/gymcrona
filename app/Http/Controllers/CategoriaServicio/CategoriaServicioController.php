@@ -15,7 +15,7 @@ class CategoriaServicioController extends Controller
         $categorias = CategoriaServicio::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(7);
-        $totalCategorias = CategoriaServicio::all()->count();
+        $totalCategorias = CategoriaServicio::where('user_id', $userId)->count();
 
         return view('categoria.index', compact('categorias', 'totalCategorias'));
     }

@@ -11,13 +11,8 @@ class Estado extends Model
 
     protected $table = 'estado';
 
-
     protected $fillable = [
+        'id',
         'nombre'
     ];
-
-    public function inscripcion()
-    {
-        return $this->hasMany(Inscripcion::class);
-    }
 }
