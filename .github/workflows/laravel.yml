@@ -30,7 +30,7 @@ jobs:
         touch database/database.sqlite
     - uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 21
     - name: Install NPM dependencies
       run: npm install
     - run: npm ci
