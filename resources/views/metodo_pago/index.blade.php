@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Sincrona - Metodos de Pago')
+@section('title', 'Gymcrona - Metodos de Pago')
 
 @section('content_header')
     <div class="row mb-2">

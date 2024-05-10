@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Sincrona - Promociones')
+@section('title', 'Gymcrona - Promociones')
 
 @section('content_header')
     <div class="container">

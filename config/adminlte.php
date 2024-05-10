@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Sincrona',
+    'title' => 'Gymcrona',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -31,7 +31,7 @@ return [
     */
 
     'use_ico_only' => true,
-    'use_full_favicon' => true,
+    'use_full_favicon' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>Sincrona</b>',
+    'logo' => '<b>Gymcrona</b>',
     'logo_img' => 'vendor/adminlte/dist/img/logo-sincrona-v1.svg',
     'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Sincrona logo',
+    'logo_img_alt' => 'Gymcrona logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -116,8 +116,8 @@ return [
             'path' => 'vendor/adminlte/dist/img/logo-sincrona-v1.svg',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 50,
+            'height' => 50,
         ],
     ],
 
@@ -338,13 +338,13 @@ return [
         ],
         ['header' => 'AREA DE VENTA'],
         [
-            'text' => 'Vender',
+            'text' => 'pos',
             'url' => '',
             'icon' => 'fas fa-shopping-cart'
         ],
         [
             'text' => 'Ingresos',
-            'icon' => 'fas fa-dollar-sign',
+            'icon' => 'fas fa-sort-amount-down-alt',
             'submenu' => [
                 [
                     'text' => 'Inscripciones',

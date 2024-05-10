@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Sincrona - Inscripciones')
+@section('title', 'Gymcrona - Inscripciones')
 
 @section('content_header')
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h5 class="font-weight-bold">Inscripciones</h5>
+                <h5 class="font-weight-bold">Inscripcioness</h5>
                 <ol class="breadcrumb font-sm">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item active">Inscripciones</li>
@@ -20,7 +20,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center" style="gap: 5px">
-                <div class="input-group border rounded w-auto">
+                <!-- Filtrar -->
+                <div class="input-group input-group-sm border rounded w-auto">
                     <span class="input-group-text border-0 font-sm rounded-0"><svg width="20" height="20"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round">
@@ -31,59 +32,68 @@
                     <input type="text" class="font-sm form-control border-0" placeholder="Buscar inscripción"
                         aria-label="search" onkeyup="filtrarProducto(this.value)">
                 </div>
-                <a href="{{ route('inscripcion.create') }}" class="ml-auto w-auto btn btn-primary font-sm d-sm-none"><svg
-                        width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <!-- Fin-->
+
+                <!-- Registar inscripcion -->
+                <!-- Boton Mobile-->
+                <a href="{{ route('inscripcion.create') }}"
+                    class="ml-auto w-auto btn font-sm d-sm-none border rounded text-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M14 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
                         <path d="M12 9.765a3 3 0 1 0 0 4.47" />
                         <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-                    </svg></a>
+                    </svg>
+                </a>
+                <!-- Boton desktop -->
                 <a href="{{ route('inscripcion.create') }}"
-                    class="ml-auto w-auto btn btn-primary font-sm d-none d-sm-inline-flex"><svg width="20"
-                        height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    class="ml-auto w-auto btn btn-primary btn-sm font-sm d-none d-sm-inline-flex">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M14 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
                         <path d="M12 9.765a3 3 0 1 0 0 4.47" />
                         <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-                    </svg>&nbsp;Nueva inscripcion</a>
+                    </svg>
+                    &nbsp;Nueva inscripcion
+                </a>
+                <!-- Fin registrar -->
             </div>
             <div class="card-body">
+                @if (session('success'))
+                    <div class="alert alert-dismissible fade show text-success font-sm"
+                        style="background: rgba(39, 174, 96,.2); border: 1px solid rgba(39,174,96, .3);" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true" class="text-success">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <p class="font-sm text-muted">
+                        Mostrando
+                        <span
+                            class="text-primary">{{ $inscripciones->firstItem() ? $inscripciones->firstItem() : 0 }}</span>
+                        -
+                        <span class="text-primary">{{ $inscripciones->lastItem() ? $inscripciones->lastItem() : 0 }}</span>
+                        de
+                        <span class="text-primary">{{ $totalInscripciones }}</span>
+                        inscripciones
+                    </p>
+                </div>
+                <div class="d-flex justify-content-start my-2">
+                    <div class="badge badge-warning p-2 fw-600">
+                        Tienes <span class="text-primary">{{ $inscripcionesPorVencer }}</span> inscripciones por
+                        vencer
+                    </div>
+                </div>
                 <div class="table-responsive-lg table-borderless">
                     @if ($inscripciones->count() > 0)
                         <table class="table table-hover" id="inscripciones">
-                            @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('success') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @endif
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <p class="font-sm text-muted">
-                                    Mostrando
-                                    <span
-                                        class="text-primary">{{ $inscripciones->firstItem() ? $inscripciones->firstItem() : 0 }}</span>
-                                    -
-                                    <span
-                                        class="text-primary">{{ $inscripciones->lastItem() ? $inscripciones->lastItem() : 0 }}</span>
-                                    de
-                                    <span class="text-primary">{{ $totalInscripciones }}</span>
-                                    inscripciones
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-start my-2">
-                                <div class="badge badge-warning p-2 fw-600">
-                                    Tienes <span class="text-primary">{{ $inscripcionesPorVencer }}</span> inscripciones por
-                                    vencer
-                                </div>
-                            </div>
                             <thead>
                                 <tr class="border-bottom">
                                     <th scope="col" class="font-sm fw-600">Nº</th>
-                                    {{-- <th scope="col" class="font-sm fw-600">Nº Boleta</th> --}}
                                     <th scope="col" class="font-sm fw-600">Cliente</th>
                                     <th scope="col" class="font-sm fw-600">Servicio</th>
                                     <th scope="col" class="font-sm fw-600">Promoción</th>
@@ -154,12 +164,42 @@
                                 </tbody>
                             @endforeach
                         </table>
-                        {{ $inscripciones->links() }}
                     @else
-                        <div class="alert alert-danger" role="alert">
-                            No hay registros disponibles.
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr class="border-bottom">
+                                    <th scope="col" class="font-sm fw-600">Nº</th>
+                                    <th scope="col" class="font-sm fw-600">Cliente</th>
+                                    <th scope="col" class="font-sm fw-600">Servicio</th>
+                                    <th scope="col" class="font-sm fw-600">Promoción</th>
+                                    <th scope="col" class="font-sm fw-600">Estado</th>
+                                    <th scope="col" class="font-sm fw-600">Fecha I.</th>
+                                    <th scope="col" class="font-sm fw-600">Fecha V.</th>
+                                    <th scope="col" class="font-sm fw-600">Precio</th>
+                                    <th scope="col" class="font-sm fw-600">Adelantó</th>
+                                    <th scope="col" class="font-sm fw-600">Deuda</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div>
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-md-6 text-center">
+                                    <img class="img-fluid" src="{{ asset('images/icons/empty-state-categories.svg') }}"
+                                        width="150" alt="Icon empty state">
+                                    <div class="title font-sm">¿Sin registros?</div>
+                                    <div class="subtitle text-secondary font-sm">Emecemos agregando unos registros a tu
+                                        cuenta</div>
+                                    <div class="mt-3">
+                                        <button type="button" data-toggle="modal" data-target="#nuevaCategoriaModal"
+                                            class="btn btn-primary btn-sm">
+                                            Empezar ahora
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     @endif
+                    {{ $inscripciones->links() }}
                 </div>
             </div>
         </div>

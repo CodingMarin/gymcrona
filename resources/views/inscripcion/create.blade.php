@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Sincrona - Inscripciones')
+@section('title', 'Gymcrona - Inscripciones')
 
 @section('content_header')
     <div class="container">
@@ -10,7 +10,7 @@
                 <ol class="breadcrumb font-sm">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('inscripcion.index') }}">Inscripciones</a></li>
-                    <li class="breadcrumb-item active">Nueva Inscripción</li>
+                    <li class="breadcrumb-item active">Crear Inscripción</li>
                 </ol>
             </div>
         </div>
@@ -36,14 +36,15 @@
                             @csrf
                             @method('POST')
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="numero_boleta" class="form-label">N° Boleta(Opcional):</label>
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="numero_boleta" class="form-label font-sm fw-600">N°
+                                        Boleta(Opcional):</label>
                                     <input type="text" class="form-control" id="numero_boleta" name="numero_boleta"
                                         placeholder="Numero de boleta" maxlength="11" />
                                 </div>
                                 <!-- Cliente -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="cliente_id" class="form-label">Cliente:</label>
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="cliente_id" class="form-label font-sm fw-600">Cliente:</label>
                                     <select class="custom-select form-select form-select-lg" id="servicio_id"
                                         name="cliente_id" required>
                                         <option value="">Seleccionar cliente</option>
@@ -54,8 +55,8 @@
                                     </select>
                                 </div>
                                 <!-- Servicio -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="categoria_id" class="form-label">Servicio:</label>
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="categoria_id" class="form-label font-sm fw-600">Servicio/Area:</label>
                                     <select class="custom-select form-select form-select-lg" id="servicio_id"
                                         name="servicio_id" required>
                                         <option value="">Seleccionar servicio</option>
@@ -66,8 +67,8 @@
                                     </select>
                                 </div>
                                 <!-- Promoción -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="promocion_id" class="form-label">Promocion:</label>
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="promocion_id" class="form-label font-sm fw-600">Promocion:</label>
                                     <select class="custom-select form-select form-select-lg" name="promocion_id"
                                         id="promocion_id" required>
                                         <option value="">Seleccionar promoción</option>
@@ -80,34 +81,34 @@
                                 </div>
                                 <!-- Fecha de emisión -->
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="fecha_emision" class="form-label">Fecha de emisión:</label>
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="fecha_emision" class="form-label font-sm fw-600">Fecha de emisión:</label>
                                     <input type="date" value="{{ now()->format('Y-m-d') }}" class="form-control"
                                         id="fecha_emision" name="fecha_emision" readonly />
                                 </div>
                                 <!-- Fecha de caducidad -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="fecha_caducidad" class="form-label">Fecha de
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="fecha_caducidad" class="form-label font-sm fw-600">Fecha de
                                         caducidad:</label>
                                     <input type="date" class="form-control" id="fecha_caducidad" name="fecha_caducidad"
                                         required />
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="monto_costo" class="form-label">Precio de la Inscripcion
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="monto_costo" class="form-label font-sm fw-600">Precio de la Inscripcion
                                         (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_costo"
-                                        name="monto_costo" placeholder="Precio de inscripcion" required />
+                                        name="monto_costo" placeholder="S/. 0.00" required />
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="monto_pago" class="form-label">Monto Pagado (S/.):</label>
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="monto_pago" class="form-label font-sm fw-600">Monto Pagado (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_pago"
-                                        name="monto_pago" placeholder="Monto cancelado" required
+                                        name="monto_pago" placeholder="S/. 0.00" required
                                         onchange="calcularDeuda()" />
                                 </div>
                                 <!-- Metodo de pago -->
-                                <div class="col-md-4">
-                                    <label for="metodo_pago_id" class="form-label">Metodo de Pago:</label>
+                                <div class="input-group-sm col-md-4">
+                                    <label for="metodo_pago_id" class="form-label font-sm fw-600">Metodo de Pago:</label>
                                     <select class="custom-select form-select form-select-lg mb-3" name="metodo_pago_id"
                                         id="metodo_pago_id" required>
                                         <option value="">Selecciona un metodo de pago</option>
@@ -119,8 +120,8 @@
                                     </select>
                                 </div>
                                 <!-- Estado -->
-                                <div class="col-md-4 mb-3">
-                                    <label for="estado_id" class="form-label">Estado de
+                                <div class="input-group-sm col-md-4 mb-3">
+                                    <label for="estado_id" class="form-label font-sm fw-600">Estado de
                                         Inscripcion:</label>
                                     <select class="custom-select form-select form-select-lg" name="estado_id"
                                         id="estado_id" required>
@@ -132,10 +133,11 @@
                                     </select>
                                 </div>
                                 <!-- Deuda -->
-                                <div class="col-md-4">
-                                    <label for="monto_deuda" class="form-label">Monto de Deuda (S/.):</label>
+                                <div class="input-group-sm col-md-4">
+                                    <label for="monto_deuda" class="form-label font-sm fw-600">Monto de Deuda
+                                        (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_deuda"
-                                        name="monto_deuda" placeholder="Deuda" readonly />
+                                        name="monto_deuda" placeholder="S/. 0.00" readonly />
                                 </div>
                             </div>
                             <div class="text-end modal-footer">
@@ -174,15 +176,11 @@
 @section('css')
     <style>
         .font-sm {
-            font-size: 0.938rem;
+            font-size: 0.938rem !important;
         }
 
         .fw-600 {
-            font-weight: 600;
-        }
-
-        .text-light-dark {
-            color: #172B4D;
+            font-weight: 600 !important;
         }
     </style>
 @endsection

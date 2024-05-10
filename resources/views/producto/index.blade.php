@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Sincrona - Productos')
+@section('title', 'Gymcrona - Productos')
 
 @section('content_header')
     <div class="row mb-2">

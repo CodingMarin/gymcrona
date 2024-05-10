@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Sincrona - Editar Inscripción')
+@section('title', 'Gymcrona - Editar Inscripción')
 
 @section('content_header')
     <div class="container">
