@@ -3,75 +3,79 @@
 @section('title', 'Gymcrona - Productos')
 
 @section('content_header')
-    <div class="row mb-2">
-        <div class="col-sm-6">
-            <h5 class="font-weight-bold">Productos</h5>
-            <ol class="breadcrumb font-sm">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                <li class="breadcrumb-item active">Productos</li>
-            </ol>
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h5 class="font-weight-bold">Productos</h5>
+                <ol class="breadcrumb font-sm">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+                    <li class="breadcrumb-item active">Productos</li>
+                </ol>
+            </div>
         </div>
     </div>
 @stop
-
-
 
 @section('content')
     <div class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center" style="gap: 5px">
                 <div class="input-group border rounded w-auto">
-                    <span class="input-group-text border-0 font-sm rounded-0"><svg width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
+                    <span class="input-group-text border-0 font-sm rounded-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                             <path d="M21 21l-6 -6" />
-                        </svg></span>
+                        </svg>
+                    </span>
                     <input type="text" class="font-sm form-control border-0" placeholder="Buscar producto"
                         aria-label="search" onkeyup="filtrarProducto(this.value)">
                 </div>
-                <a href="{{ route('producto.create') }}" class="ml-auto w-auto btn btn-primary font-sm d-sm-none"><svg
-                        width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <a href="{{ route('producto.create') }}" class="ml-auto w-auto btn btn-primary font-sm d-sm-none">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M14 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
                         <path d="M12 9.765a3 3 0 1 0 0 4.47" />
                         <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-                    </svg></a>
+                    </svg>
+                </a>
                 <a href="{{ route('producto.create') }}"
-                    class="ml-auto w-auto btn btn-primary font-sm d-none d-sm-inline-flex"><svg width="20"
-                        height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    class="ml-auto w-auto btn btn-primary font-sm d-none d-sm-inline-flex">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M14 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
                         <path d="M12 9.765a3 3 0 1 0 0 4.47" />
                         <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-                    </svg>&nbsp;Nuevo producto</a>
+                    </svg>
+                    &nbsp;Nuevo producto
+                </a>
             </div>
             <div class="card-body">
+                @if (session('success'))
+                    <div class="alert alert-dismissible fade show text-success font-sm"
+                        style="background: rgba(39, 174, 96,.2); border: 1px solid rgba(39,174,96, .3);" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true" class="text-success">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <p class="font-sm text-muted">
+                        Mostrando
+                        <span class="text-primary">{{ $productos->firstItem() ? $productos->firstItem() : 0 }}</span>
+                        -
+                        <span class="text-primary">{{ $productos->lastItem() ? $productos->lastItem() : 0 }}</span>
+                        de
+                        <span class="text-primary">{{ $totalProductos }}</span>
+                        productos
+                    </p>
+                </div>
                 <div class="table-responsive-lg table-borderless">
                     <table class="table table-hover" id="productos">
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('success') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <p class="font-sm text-muted">
-                                Mostrando
-                                <span
-                                    class="text-primary">{{ $productos->firstItem() ? $productos->firstItem() : 0 }}</span>
-                                -
-                                <span class="text-primary">{{ $productos->lastItem() ? $productos->lastItem() : 0 }}</span>
-                                de
-                                <span class="text-primary">{{ $totalProductos }}</span>
-                                productos
-                            </p>
-                        </div>
                         <thead>
                             <tr class="border-bottom">
                                 <th scope="col" class="font-sm">Nº</th>

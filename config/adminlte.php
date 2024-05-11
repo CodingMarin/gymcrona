@@ -338,8 +338,8 @@ return [
         ],
         ['header' => 'AREA DE VENTA'],
         [
-            'text' => 'pos',
-            'url' => '',
+            'text' => 'Ventas',
+            'url' => 'venta',
             'icon' => 'fas fa-shopping-cart'
         ],
         [

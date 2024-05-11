@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CategoriaProducto\CategoriaProductoController;
 use App\Http\Controllers\CategoriaServicio\CategoriaServicioController;
 use App\Http\Controllers\Cliente\ClienteController;
 use App\Http\Controllers\Home\HomeController;
@@ -10,7 +9,7 @@ use App\Http\Controllers\Pago\PagoController;
 use App\Http\Controllers\Producto\ProductoController;
 use App\Http\Controllers\PromocionServicio\PromocionServicioController;
 use App\Http\Controllers\User\UserController;
-use App\Models\CategoriaProducto;
+use App\Http\Controllers\Venta\VentaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,6 +61,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('producto', ProductoController::class)->only([
         'index', 'store', 'create', 'destroy'
+    ]);
+
+    Route::resource('venta', VentaController::class)->only([
+        'index', 'store', 'create'
     ]);
 
     Route::get('/clientes/exportar', [ClienteController::class, 'export'])->name('cliente.export');

@@ -32,6 +32,17 @@
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="card-body">
+                        <div class="alert alert-dismissible fade show text-warning font-sm"
+                            style="background: rgba(243, 156, 18,.1); border: 1px solid rgba(243, 156, 18,.2);"
+                            role="alert">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="font-sm">No tienes ningun metodo de pago configurado.</span>
+                                <a href="{{ route('metodo-pago.index') }}"
+                                    class="rounded border-warning btn btn-sm bg-warning text-decoration-none">
+                                    <span class="text-white">Ir </span>
+                                </a>
+                            </div>
+                        </div>
                         <form action="{{ route('inscripcion.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
@@ -68,7 +79,7 @@
                                 </div>
                                 <!-- Promoción -->
                                 <div class="input-group-sm col-md-4 mb-3">
-                                    <label for="promocion_id" class="form-label font-sm fw-600">Promocion:</label>
+                                    <label for="promocion_id" class="form-label font-sm fw-600">Promoción:</label>
                                     <select class="custom-select form-select form-select-lg" name="promocion_id"
                                         id="promocion_id" required>
                                         <option value="">Seleccionar promoción</option>
@@ -103,8 +114,7 @@
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="monto_pago" class="form-label font-sm fw-600">Monto Pagado (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_pago"
-                                        name="monto_pago" placeholder="S/. 0.00" required
-                                        onchange="calcularDeuda()" />
+                                        name="monto_pago" placeholder="S/. 0.00" required onchange="calcularDeuda()" />
                                 </div>
                                 <!-- Metodo de pago -->
                                 <div class="input-group-sm col-md-4">
@@ -141,7 +151,8 @@
                                 </div>
                             </div>
                             <div class="text-end modal-footer">
-                                <button type="submit" class="btn btn-outline-primary btn-sm">
+                                <button type="submit" class="btn btn-outline-primary btn-sm"
+                                    @if ($metodoPago->count() > 0) @else disabled @endif>
                                     Inscribir
                                 </button>
                             </div>

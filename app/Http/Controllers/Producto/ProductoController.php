@@ -13,7 +13,7 @@ class ProductoController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $totalProductos = Producto::count();
+        $totalProductos = Producto::where('user_id', $userId)->count();
         $productos = Producto::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(5);
