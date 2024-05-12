@@ -8,7 +8,7 @@
             <h5 class="font-weight-bold">Metodos de pago</h5>
             <ol class="breadcrumb font-sm">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Metodos de Pago</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('metodo-pago.index') }}">Metodos de pago</a></li>
                 <li class="breadcrumb-item active">Editar metodo de pago</li>
             </ol>
         </div>
@@ -37,9 +37,19 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="descripcion">Descripción</label>
-                        <input type="text" name="descripcion" id="descripcion" class="form-control"
-                            value="{{ $metodoPago->descripcion }}">
+                        <picture>
+                            <img class="border rounded" width="100"
+                                src="{{ asset('images/payments/' . $metodoPago->foto_qr) }}"
+                                alt="{{ $metodoPago->brand->nombre }}">
+                        </picture>
+                    </div>
+                    <div class="form-group">
+                        <label for="foto_qr" class="form-label font-sm">Subir QR:</label>
+                        <div class="custom-file">
+                            <input type="file" class="form-control-file" id="foto_qr" name="foto_qr"
+                                onchange="previewImage(this)" required>
+                        </div>
+                        <div id="imagePreview" class="mt-2 text-center"></div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Actualizar</button>

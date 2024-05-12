@@ -3,9 +3,11 @@
 @section('title', 'Metodos de Pago')
 
 @section('content_header')
-    <div class="row mb-2">
-        <div class="col-sm-6">
-            <h5 class="font-weight-bold">Perfil</h5>
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h5 class="font-weight-bold">Perfil</h5>
+            </div>
         </div>
     </div>
 @stop
@@ -14,7 +16,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center border-0">
             <div class="col-sm-6">
-                <h3 class="font-sm font-weight-bold mb-0 text-truncate">Configuracion de perfil</h3>
+                <h3 class="font-sm fw-600 mb-0 text-truncate">Configuracion de perfil</h3>
                 <p class="text-muted font-sm text-truncate">Información personal</p>
             </div>
             <div class="col-sm-6 text-right top-0">
@@ -24,7 +26,7 @@
         <div class="card-body">
             <!-- Foto Perfil -->
             <div class="form-group row">
-                <label for="inputFotoPerfil" class="col-sm-2 col-form-label font-sm">
+                <label for="inputFotoPerfil" class="col-sm-2 col-form-label font-sm fw-600">
                     <span class="d-flex align-items-center">
                         <div class="rounded-circle d-flex justify-content-center align-items-center mr-2"
                             style="background-color: #E3E3E3; width:30px; height:30px">
@@ -50,7 +52,7 @@
             </div>
             <!-- Nombre -->
             <div class="form-group row">
-                <label for="inputName" class="col-sm-2 col-form-label font-sm">
+                <label for="inputName" class="col-sm-2 col-form-label font-sm fw-600">
                     <span class="d-flex align-items-center">
                         <div class="rounded-circle d-flex justify-content-center align-items-center mr-2"
                             style="background-color: #E3E3E3; width:30px; height:30px">
@@ -70,7 +72,7 @@
             </div>
             <!-- Ruc -->
             <div class="form-group row">
-                <label for="inputName" class="col-sm-2 col-form-label font-sm">
+                <label for="inputName" class="col-sm-2 col-form-label font-sm fw-600">
                     <span class="d-flex align-items-center">
                         <div class="rounded-circle d-flex justify-content-center align-items-center mr-2"
                             style="background-color: #E3E3E3; width:30px; height:30px">
@@ -94,7 +96,7 @@
             </div>
             <!-- Correo eléctronico -->
             <div class="form-group row">
-                <label for="inputName" class="col-sm-2 col-form-label font-sm">
+                <label for="inputName" class="col-sm-2 col-form-label font-sm fw-600">
                     <span class="d-flex align-items-center">
                         <div class="rounded-circle d-flex justify-content-center align-items-center mr-2"
                             style="background-color: #E3E3E3; width:30px; height:30px">
@@ -121,7 +123,7 @@
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <label for="inputCurrency" class="col-sm-2 col-form-label font-sm">Moneda</label>
+                <label for="inputCurrency" class="col-sm-2 col-form-label font-sm fw-600">Moneda</label>
                 <div class="col-sm-10">
                     <select class="form-control font-sm" id="inputCurrency" disabled>
                         <option value="pen" selected>PEN</option>
@@ -136,15 +138,11 @@
 @section('css')
     <style>
         .font-sm {
-            font-size: 0.938rem;
+            font-size: 0.938rem !important;
         }
 
         .fw-600 {
-            font-weight: 600;
-        }
-
-        .text-light-dark {
-            color: #172B4D;
+            font-weight: 600 !important;
         }
     </style>
 @endsection

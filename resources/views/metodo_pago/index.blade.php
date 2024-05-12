@@ -73,7 +73,7 @@
                                 <th scope="col" class="font-sm fw-600 text-light-dark">Nº</th>
                                 <th scope="col" class="font-sm fw-600 text-light-dark">Tipo</th>
                                 <th scope="col" class="font-sm fw-600 text-light-dark">Logo</th>
-                                <th scope="col" class="font-sm fw-600 text-light-dark">Descripción</th>
+                                <th scope="col" class="font-sm fw-600 text-light-dark">QR</th>
                                 <th scope="col" class="font-sm fw-600 text-light-dark text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -91,7 +91,12 @@
                                                 alt="{{ $metodoPago->brand->nombre }}">
                                         </picture>
                                     </td>
-                                    <td class="font-sm text-truncate">{{ $metodoPago->descripcion }}</td>
+                                    <td class="font-sm">
+                                        <picture>
+                                            <img width="30" src="{{ asset('images/payments/' . $metodoPago->foto_qr) }}"
+                                                alt="{{ $metodoPago->brand->nombre }}">
+                                        </picture>
+                                    </td>
                                     <td class="d-flex justify-content-center">
                                         <div class="btn-group" role="group" aria-label="Actions">
                                             <a href="{{ route('metodo-pago.edit', $metodoPago->id) }}"
@@ -167,13 +172,14 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Agregar metodo de pago</h5>
+                        <h5 class="modal-title font-sm">Agregar metodo de pago</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="formNuevoMetodoPago" action="{{ route('metodo-pago.store') }}" method="POST">
+                        <form id="formNuevoMetodoPago" action="{{ route('metodo-pago.store') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="modal-body">
@@ -187,8 +193,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="descripcion" class="font-sm">Descripción</label>
-                                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                                    <label for="foto_qr" class="form-label font-sm">Subir QR:</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="form-control-file" id="foto_qr" name="foto_qr"
+                                            onchange="previewImage(this)" required>
+                                    </div>
+                                    <div id="imagePreview" class="mt-2 text-center"></div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -248,6 +258,25 @@
 
 @section('js')
     <script>
+        function previewImage(input) {
+            var preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-thumbnail');
+                    img.style.maxHeight = '300px';
+                    preview.appendChild(img);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         function filtrarMetodoPago(filtro) {
             const filasMetodoPago = document.querySelectorAll("#metodosPago tbody tr");
             filasMetodoPago.forEach((fila) => {

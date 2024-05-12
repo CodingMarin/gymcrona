@@ -98,7 +98,7 @@
                                                     @foreach ($metodosPago as $metodo)
                                                         <option value="{{ $metodo->id }}"
                                                             data-nombre="{{ $metodo->brand->nombre }}"
-                                                            data-imagen="{{ $metodo->brand->logo }}">
+                                                            data-imagen="{{ $metodo->foto_qr }}">
                                                             {{ $metodo->brand->nombre }}
                                                         </option>
                                                     @endforeach
@@ -175,6 +175,8 @@
             </div>
         </div>
     </div>
+    <!-- Toast -->
+    <x-toast> Todos los campos son requeridos.</x-toast>
     <script>
         function filtrarProducto(filtro) {
             const productoSeleccionado = $("option[value='" + filtro + "']");
@@ -200,19 +202,32 @@
 
         function agregarProductoTemporal() {
             let productoNombre = $("#producto_nombre").val();
-            let cantidad = $("#cant_producto").val();
+            let cantidad = parseInt($("#cant_producto").val());
+            let stock = parseInt($("#stock").val());
             let producto_id = $("#producto_id").val();
             let precio = $("#precio").val();
             let cliente = $("#cliente_id").val();
             let metodoPago = $("#metodo_pago_id").val();
             if (productoNombre === '' || cantidad === '' || cliente === '' || metodoPago === '') {
                 // Mostrar un alerta
-                alert("Por favor, completa los campos");
+                $("#liveToast").toast('show');
                 // Salir de la función si hay campos vacíos
                 return;
             } else {
                 // Habilitar boton una vez completado los campos
                 $("#continuar_btn").attr('disabled', false);
+            }
+
+            // Validar productos con stock 0 no pueden ser agregados
+            if (stock == 0) {
+                alert("No se puede agregar productos con stock 0");
+                return;
+            }
+
+            // Validar que la cantidad no supere al stock
+            if (cantidad > stock) {
+                alert("La cantidad no puede superar al stock");
+                return;
             }
 
             // Calcular el subtotal de los productos añadidos al table
@@ -258,7 +273,7 @@
             const imagen = metodoPagoSeleccionado.getAttribute("data-imagen");
 
             // Enviar el QR al checkout
-            $("#feature_img").attr('src', "{{ asset('/images/brands') }}/" + imagen);
+            $("#feature_img").attr('src', "{{ asset('/images/payments') }}/" + imagen);
         });
 
         function abrirModal() {

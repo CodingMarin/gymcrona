@@ -15,7 +15,7 @@ class VentaController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $totalVentas = Venta::where('user_id', $userId)->count();
+        $totalVentas = Venta::where('user_id', $userId)->get();
         $ventas = Venta::superSelect($userId);
 
         return view('venta.index', compact('ventas', 'totalVentas'));
@@ -58,7 +58,7 @@ class VentaController extends Controller
             );
         }
 
-        return view('venta.index');
+        return redirect()->route('venta.index');
     }
 
     public function create()

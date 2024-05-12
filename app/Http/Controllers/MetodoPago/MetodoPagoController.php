@@ -36,7 +36,7 @@ class MetodoPagoController extends Controller
     {
         $request->validate([
             'brand_id' => 'required|exists:brands,id',
-            'descripcion' => 'required|string',
+            'foto_qr' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $userId = Auth::id();
@@ -44,7 +44,7 @@ class MetodoPagoController extends Controller
         $metodoPago = MetodoPago::where('user_id', $userId)->findOrFail($id);
 
         $metodoPago->brand_id = $request->brand_id;
-        $metodoPago->descripcion = $request->descripcion;
+        $metodoPago->foto_qr = $request->foto_qr;
         $metodoPago->save();
 
         return redirect()->route('metodo-pago.index')->with('success', '¡El método de pago se ha actualizado correctamente!');
@@ -54,19 +54,33 @@ class MetodoPagoController extends Controller
     {
         $request->validate([
             'brand_id' => 'required|exists:brands,id',
-            'descripcion' => 'required|string',
+            'foto_qr' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $userId = Auth::id();
+        $imageName = null;
 
-        $metodoPago = new MetodoPago();
-        $metodoPago->user_id = $userId;
-        $metodoPago->brand_id = $request->brand_id;
-        $metodoPago->descripcion = $request->descripcion;
-        $metodoPago->save();
+        // Manejar la subida de la imagen
+        if ($request->hasFile('foto_qr')) {
+            $image = $request->file('foto_qr');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/payments'), $imageName);
+        }
 
-        return redirect()->route('metodo-pago.index')->with('success', '¡El método de pago se ha creado correctamente!');
+        // Llamada al procedimiento almacenado
+        $success = MetodoPago::superInsert(
+            Auth::id(),
+            $request->brand_id,
+            $imageName
+        );
+
+        if ($success) {
+            return redirect()->route('metodo-pago.index')->with('success', '¡El método de pago se ha creado correctamente!');
+        } else {
+            // Manejar el caso en que la inserción falla
+            return redirect()->back()->withInput()->withErrors(['Error al crear el método de pago']);
+        }
     }
+
 
     public function destroy($id)
     {
