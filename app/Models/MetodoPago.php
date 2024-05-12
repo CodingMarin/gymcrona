@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MetodoPago extends Model
 {
@@ -13,7 +14,9 @@ class MetodoPago extends Model
 
     protected $fillable = [
         'id',
-        'descripcion'
+        'user_id',
+        'brand_id',
+        'foto_qr'
     ];
 
     public function user()
@@ -24,5 +27,14 @@ class MetodoPago extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    /**
+     * Store procedure
+     */
+
+    static public function superInsert($user_id, $brand_id, $foto_qr)
+    {
+        return DB::statement('call sp_insertar_metodo_pago(?,?,?)', [$user_id, $brand_id, $foto_qr]);
     }
 }
