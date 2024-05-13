@@ -16,6 +16,24 @@
 
 @section('content')
     <div class="container">
+        <!-- Mostrar mensaje satisfactorio -->
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        <!-- Mostrar mensjae de error -->
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center" style="gap: 5px">
                 <div class="input-group border rounded w-auto">
@@ -51,14 +69,6 @@
             <div class="card-body">
                 <div class="table-responsive-md table-borderless">
                     <table class="table table-hover" id="metodosPago">
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('success') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <p class="font-sm text-muted">
                                 Mostrando
@@ -93,7 +103,8 @@
                                     </td>
                                     <td class="font-sm">
                                         <picture>
-                                            <img width="30" src="{{ asset('images/payments/' . $metodoPago->foto_qr) }}"
+                                            <img width="100"
+                                                src="{{ asset('images/payments/' . $metodoPago->foto_qr) }}"
                                                 alt="{{ $metodoPago->brand->nombre }}">
                                         </picture>
                                     </td>

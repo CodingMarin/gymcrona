@@ -22,7 +22,8 @@
                 <h5 class="card-title">Editar Método de Pago</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('metodo-pago.update', $metodoPago->id) }}" method="POST">
+                <form action="{{ route('metodo-pago.update', $metodoPago->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
