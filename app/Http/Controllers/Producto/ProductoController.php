@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Producto;
 use App\Http\Controllers\Controller;
 use App\Models\CategoriaProducto;
 use App\Models\Producto;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,10 +65,20 @@ class ProductoController extends Controller
 
     public function destroy($id)
     {
-        $user_id = Auth::id();
-        $producto = Producto::where('user_id', $user_id)->findOrFail($id);
-        $producto->delete();
+        try {
+            $user_id = Auth::id();
+            $producto = Producto::where('user_id', $user_id)->findOrFail($id);
+            $producto->delete();
 
-        return redirect()->route('producto.index')->with('success', 'Producto eliminado');
+            return redirect()->route('producto.index')->with('success', 'Producto eliminado');
+        } catch (QueryException $e) {
+            // Manejar el error de integridad referencial (1451)
+            if ($e->errorInfo[1] === 1451) {
+                return redirect()->back()->with('error', 'No se puede eliminar el producto porque está siendo utilizado en ventas registradas.');
+            } else {
+                // Manejar otros errores de base de datos
+                return redirect()->back()->with('error', 'Error al intentar eliminar el producto.');
+            }
+        }
     }
 }

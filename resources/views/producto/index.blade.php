@@ -18,6 +18,24 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-dismissible fade show text-success font-sm"
+                style="background: rgba(39, 174, 96,.2); border: 1px solid rgba(39,174,96, .3);" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true" class="text-success">&times;</span>
+                </button>
+            </div>
+        @endif
+        <!-- Mostrar mensjae de error -->
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center" style="gap: 5px">
                 <div class="input-group border rounded w-auto">
@@ -54,15 +72,6 @@
                 </a>
             </div>
             <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-dismissible fade show text-success font-sm"
-                        style="background: rgba(39, 174, 96,.2); border: 1px solid rgba(39,174,96, .3);" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true" class="text-success">&times;</span>
-                        </button>
-                    </div>
-                @endif
                 <div class="d-flex justify-content-between align-items-center mt-3">
                     <p class="font-sm text-muted">
                         Mostrando
@@ -98,7 +107,8 @@
                                     <td scope="row">{{ $i }}</td>
                                     <td class="font-sm">
                                         <picture>
-                                            <img width="50" src="{{ asset('images/productos/' . $producto->foto_url) }}"
+                                            <img width="50"
+                                                src="{{ asset('images/productos/' . $producto->foto_url) }}"
                                                 alt="{{ $producto->foto_url }}">
                                         </picture>
                                     </td>
