@@ -32,17 +32,19 @@
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="card-body">
-                        <div class="alert alert-dismissible fade show text-warning font-sm"
-                            style="background: rgba(243, 156, 18,.1); border: 1px solid rgba(243, 156, 18,.2);"
-                            role="alert">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="font-sm">No tienes ningun metodo de pago configurado.</span>
-                                <a href="{{ route('metodo-pago.index') }}"
-                                    class="rounded border-warning btn btn-sm bg-warning text-decoration-none">
-                                    <span class="text-white">Ir </span>
-                                </a>
+                        @if (!isset($metodoPago))
+                            <div class="alert alert-dismissible fade show text-warning font-sm"
+                                style="background: rgba(243, 156, 18,.1); border: 1px solid rgba(243, 156, 18,.2);"
+                                role="alert">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="font-sm">No tienes ningun metodo de pago configurado.</span>
+                                    <a href="{{ route('metodo-pago.index') }}"
+                                        class="rounded border-warning btn btn-sm bg-warning text-decoration-none">
+                                        <span class="text-white">Ir </span>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <form action="{{ route('inscripcion.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
@@ -79,9 +81,10 @@
                                 </div>
                                 <!-- Promoción -->
                                 <div class="input-group-sm col-md-4 mb-3">
-                                    <label for="promocion_id" class="form-label font-sm fw-600">Promoción:</label>
+                                    <label for="promocion_id" class="form-label font-sm fw-600">Promoción
+                                        (opcional):</label>
                                     <select class="custom-select form-select form-select-lg" name="promocion_id"
-                                        id="promocion_id" required>
+                                        id="promocion_id">
                                         <option value="">Seleccionar promoción</option>
                                         @foreach ($promocionServicio as $promocion)
                                             <option value="{{ $promocion->id }}" data-precio="{{ $promocion->precio }}">

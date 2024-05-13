@@ -116,7 +116,7 @@
                                         <td class="font-sm">{{ $inscripcion->cliente->nombres }}</td>
                                         <td class="font-sm">{{ $inscripcion->categoriaServicio->nombre }}
                                         </td>
-                                        <td class="font-sm">{{ $inscripcion->promocionServicio->nombre }}
+                                        <td class="font-sm">{{ $inscripcion->promocionServicio->nombre ?? 'N/A' }}
                                         </td>
                                         <td class="font-sm">
                                             @if ($inscripcion->estado->id == 1)

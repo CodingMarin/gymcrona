@@ -106,7 +106,7 @@ class InscripcionController extends Controller
             $userId,
             $request->numero_boleta,
             $request->servicio_id,
-            $request->promocion_id,
+            $request->promocion_id ?? null,
             $request->metodo_pago_id,
             $request->estado_id,
             $request->fecha_caducidad,
@@ -118,7 +118,7 @@ class InscripcionController extends Controller
         $pago->user_id = $userId;
         $pago->metodo_id = $request->metodo_pago_id;
         $pago->servicio_id = $request->servicio_id;
-        $pago->promocion_id = $request->promocion_id;
+        $pago->promocion_id = $request->promocion_id ?? null;
         $pago->monto = $request->pago_actual;
         $pago->save();
 
@@ -149,7 +149,7 @@ class InscripcionController extends Controller
         $inscripcion->numero_boleta = $request->numero_boleta ?? '000';
         $inscripcion->cliente_id = $request->cliente_id;
         $inscripcion->categoria_servicio_id = $request->servicio_id;
-        $inscripcion->promocion_servicio_id = $request->promocion_id;
+        $inscripcion->promocion_servicio_id = $request->promocion_id ?? null;
         $inscripcion->metodo_pago_id = $request->metodo_pago_id;
         $inscripcion->estado_id = $request->estado_id;
         $inscripcion->fecha_emision = $request->fecha_emision;

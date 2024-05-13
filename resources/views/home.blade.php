@@ -11,8 +11,8 @@
                     url-text="Ver todos los clientes" />
             </div>
             <div class="col-md-4">
-                <x-adminlte-small-box class="text-sm bg-purple-400 text-white" title="{{ $clientes }}"
-                    text="Productos vendidos" icon="far fa-handshake text-white" url="{{ route('cliente.index') }}"
+                <x-adminlte-small-box class="text-sm bg-purple-400 text-white" title="{{ $ventas }}"
+                    text="Ventas registradas" icon="far fa-handshake text-white" url="{{ route('venta.index') }}"
                     url-text="Registros de venta" />
             </div>
             <div class="col-md-4">
@@ -24,11 +24,6 @@
                 <x-adminlte-small-box class="text-sm bg-violet-400 text-white" title="{{ $inscripciones }}"
                     text="Total de inscripciones" icon="fas fa-address-card text-white"
                     url="{{ route('inscripcion.index') }}" url-text="Ver todas las incripciones" />
-            </div>
-            <div class="col-md-4">
-                <x-adminlte-small-box class="text-sm bg-blue-400 text-white" title="{{ $promociones }}" text="Promociones"
-                    icon="far fa-lightbulb text-white" url="{{ route('promocion.index') }}"
-                    url-text="Ver tas las promociones" />
             </div>
         </div>
     </div>

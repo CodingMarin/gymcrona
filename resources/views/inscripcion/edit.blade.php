@@ -30,16 +30,16 @@
                             <div class="row">
 
                                 <!-- Número de boleta -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="numero_boleta" class="form-label">N° Boleta (Opcional):</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="numero_boleta" class="form-label fw-600">N° Boleta (Opcional):</label>
                                     <input type="text" class="form-control" id="numero_boleta" name="numero_boleta"
                                         placeholder="Número de boleta" maxlength="11"
                                         value="{{ $inscripcion->numero_boleta }}" />
                                 </div>
 
                                 <!-- Cliente -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="cliente_id" class="form-label">Cliente:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="cliente_id" class="form-label fw-600">Cliente:</label>
 
                                     <!-- Cliente id -->
                                     <input type="hidden" class="form-control" id="cliente_id" name="cliente_id"
@@ -51,8 +51,8 @@
                                 </div>
 
                                 <!-- Servicio -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="servicio_id" class="form-label">Servicio:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="servicio_id" class="form-label fw-600">Servicio:</label>
 
                                     <!-- Servicio id -->
                                     <input type="hidden" class="form-control" id="servicio_id" name="servicio_id"
@@ -63,63 +63,66 @@
                                         value="{{ $inscripcion->categoriaServicio->nombre }}" readonly>
                                 </div>
                                 <!-- Promoción -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="promocion_id" class="form-label">Promoción:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="promocion_id" class="form-label fw-600">Promoción:</label>
 
                                     <!-- Promocion id -->
                                     <input type="hidden" class="form-control" id="promocion_id" name="promocion_id"
-                                        value="{{ $inscripcion->promocionServicio->id }}">
+                                        value="{{ $inscripcion->promocionServicio->id ?? null }}">
 
                                     <!-- Promocion nombre -->
                                     <input type="text" class="form-control"
-                                        value="{{ $inscripcion->promocionServicio->nombre }}" readonly>
+                                        value="{{ $inscripcion->promocionServicio->nombre ?? 'N/A' }}" readonly>
                                 </div>
 
                                 <!-- Fecha de emisión -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="fecha_emision" class="form-label">Fecha de emisión:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="fecha_emision" class="form-label fw-600">Fecha de emisión:</label>
                                     <input type="date" class="form-control" id="fecha_emision" name="fecha_emision"
                                         value="{{ $inscripcion->fecha_emision }}" readonly />
                                 </div>
 
                                 <!-- Fecha de caducidad -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="fecha_caducidad" class="form-label">Fecha de caducidad:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="fecha_caducidad" class="form-label fw-600">Fecha de caducidad:</label>
                                     <input type="date" class="form-control" id="fecha_caducidad" name="fecha_caducidad"
                                         value="{{ $inscripcion->fecha_caducidad }}" required />
                                 </div>
 
                                 <!-- Precio -->
-                                <div class="col-md-3 mb-3">
-                                    <label for="monto_costo" class="form-label">Precio de la Inscripción (S/.):</label>
+                                <div class="col-md-3 mb-3 input-group-sm">
+                                    <label for="monto_costo" class="form-label fw-600">Precio de la Inscripción
+                                        (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_costo"
                                         name="monto_costo" value="{{ $inscripcion->monto_costo }}" required readonly />
                                 </div>
 
                                 <!-- Monto Pagado -->
-                                <div class="col-md-3 mb-3">
-                                    <label for="monto_pago" class="form-label">Monto Pagado (S/.):</label>
+                                <div class="col-md-3 mb-3 input-group-sm">
+                                    <label for="monto_pago" class="form-label fw-600">Monto Pagado (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_pago"
                                         name="monto_pago" value="{{ $inscripcion->monto_pago }}" readonly />
                                 </div>
 
                                 <!-- Monto de Deuda -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="monto_deuda" class="form-label text-danger">Monto de Deuda (S/.):</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="monto_deuda" class="form-label text-danger fw-600">Monto de Deuda
+                                        (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_deuda"
                                         name="monto_deuda" value="{{ $inscripcion->monto_deuda }}" readonly />
                                 </div>
 
                                 <!--  de Deuda -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="pago_actual" class="form-label text-success">Pago actual (S/.):</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="pago_actual" class="form-label text-success fw-600">Pago actual
+                                        (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="pago_actual"
                                         name="pago_actual" placeholder="0.00" onchange="calcularDeuda()" />
                                 </div>
 
                                 <!-- Método de Pago -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="metodo_pago_id" class="form-label">Método de Pago:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="metodo_pago_id" class="form-label fw-600">Método de Pago:</label>
                                     <select class="custom-select form-select form-select-lg" id="metodo_pago_id"
                                         name="metodo_pago_id" required>
                                         @foreach ($metodoPago as $pago)
@@ -132,8 +135,8 @@
                                 </div>
 
                                 <!-- Estado -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="estado_id" class="form-label">Estado de Inscripción:</label>
+                                <div class="col-md-6 mb-3 input-group-sm">
+                                    <label for="estado_id" class="form-label fw-600">Estado de Inscripción:</label>
                                     <select class="custom-select form-select form-select-lg" name="estado_id">
                                         @foreach ($estadoInscripcion as $estado)
                                             <option value="{{ $estado->id }}"
@@ -181,7 +184,7 @@
         }
 
         .fw-600 {
-            font-weight: 600;
+            font-weight: 600 !important;
         }
 
         .text-light-dark {

@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use App\Models\Inscripcion;
 use App\Models\Producto;
 use App\Models\PromocionServicio;
+use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,9 +33,9 @@ class HomeController extends Controller
         $user_id = Auth::id();
         $productos = Producto::where('user_id', $user_id)->count();
         $clientes = Cliente::where('user_id', $user_id)->count();
-        $promociones = PromocionServicio::where('user_id', $user_id)->count();
         $inscripciones = Inscripcion::where('user_id', $user_id)->count();
+        $ventas = Venta::where('user_id', $user_id)->count();
 
-        return view('home', compact('clientes', 'productos', 'inscripciones', 'promociones'));
+        return view('home', compact('clientes', 'productos', 'inscripciones', 'ventas'));
     }
 }

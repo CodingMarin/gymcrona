@@ -345,17 +345,7 @@ return [
         [
             'text' => 'Ingresos',
             'icon' => 'fas fa-sort-amount-down-alt',
-            'submenu' => [
-                [
-                    'text' => 'Inscripciones',
-                    'url' => 'inscripcion-ingresos',
-
-                ],
-                [
-                    'text' => 'Productos',
-                    'url' => 'producto-ingresos',
-                ],
-            ],
+            'url' => 'inscripcion-ingresos',
         ],
         [
             'text' => 'Metodos de Pago',
