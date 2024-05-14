@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Venta;
 use App\Http\Controllers\Controller;
 use App\Models\Cliente;
 use App\Models\MetodoPago;
+use App\Models\Pago;
 use App\Models\Producto;
 use App\Models\Venta;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class VentaController extends Controller
             'cliente_id' => 'required|exists:cliente,id',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
             'detalle_venta.*.producto_id' => 'required|exists:producto,id',
+            'detalle_venta.*.producto_nombre' => 'required|string',
             'detalle_venta.*.cantidad' => 'required|numeric|min:1',
         ]);
 
@@ -35,6 +37,7 @@ class VentaController extends Controller
 
         foreach ($request->detalle_venta as $detalle) {
             $producto_id = $detalle['producto_id'];
+            $producto_nombre = $detalle['producto_nombre'];
             $cantidad = $detalle['cantidad'];
 
             // Instanciar modelo producto
@@ -56,6 +59,14 @@ class VentaController extends Controller
                 $subtotal,
                 null // Observaciones, nulla por ahora
             );
+
+            //Guardar el registro de venta en pagos
+            $pago = new Pago();
+            $pago->user_id = $request->user()->id;
+            $pago->metodo_id = $metodo_pago_id;
+            $pago->producto_servicio = $producto_nombre;
+            $pago->monto = $subtotal;
+            $pago->save();
         }
 
         return redirect()->route('venta.index');

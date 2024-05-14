@@ -327,6 +327,11 @@ return [
             'icon' => 'fas fa-tags',
         ],
         [
+            'text' => 'Metodos de Pago',
+            'url' => 'metodo-pago',
+            'icon' => 'fas fa-money-bill',
+        ],
+        [
             'text' => 'Clientes',
             'url' => 'cliente',
             'icon' => 'fas fa-users',
@@ -336,23 +341,7 @@ return [
             'url' => 'inscripcion',
             'icon' => 'fas fa-address-card',
         ],
-        ['header' => 'AREA DE VENTA'],
-        [
-            'text' => 'Ventas',
-            'url' => 'venta',
-            'icon' => 'fas fa-shopping-cart'
-        ],
-        [
-            'text' => 'Ingresos',
-            'icon' => 'fas fa-sort-amount-down-alt',
-            'url' => 'inscripcion-ingresos',
-        ],
-        [
-            'text' => 'Metodos de Pago',
-            'url' => 'metodo-pago',
-            'icon' => 'fas fa-money-bill',
-        ],
-        ['header' => 'INVENTARIO'],
+        ['header' => 'TIENDA'],
         [
             'text' => 'Productos',
             'url' => 'producto',
@@ -362,6 +351,17 @@ return [
             'text' => 'Inventario',
             'url' => 'inventario',
             'icon' => 'fas fa-box-open',
+        ],
+        ['header' => 'AREA DE VENTAS'],
+        [
+            'text' => 'Ventas',
+            'url' => 'venta',
+            'icon' => 'fas fa-shopping-cart'
+        ],
+        [
+            'text' => 'Ingresos',
+            'icon' => 'fas fa-sort-amount-down-alt',
+            'url' => 'inscripcion-ingresos',
         ],
         ['header' => 'CONFIGURACION'],
         [
