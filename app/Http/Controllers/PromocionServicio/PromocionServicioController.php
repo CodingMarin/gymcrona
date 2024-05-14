@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PromocionServicio;
 
 use App\Http\Controllers\Controller;
 use App\Models\PromocionServicio;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,9 +67,19 @@ class PromocionServicioController extends Controller
 
     public function destroy($id)
     {
-        $promocion = PromocionServicio::where('user_id', Auth::id())->findOrFail($id);
-        $promocion->delete();
+        try {
+            $promocion = PromocionServicio::where('user_id', Auth::id())->findOrFail($id);
+            $promocion->delete();
 
-        return redirect()->route('promocion.index')->with('success', '¡Promoción eliminada correctamente!');
+            return redirect()->route('promocion.index')->with('success', '¡Promoción eliminada correctamente!');
+        } catch (QueryException $e) {
+            // Manejar el error de integridad referencial (1451)
+            if ($e->errorInfo[1] === 1451) {
+                return redirect()->back()->with('error', 'No se puede eliminar la promocion porque está siendo utilizado en inscripciones registradas.');
+            } else {
+                // Manejar otros errores de base de datos
+                return redirect()->back()->with('error', 'Error al intentar eliminar la promoción.');
+            }
+        }
     }
 }

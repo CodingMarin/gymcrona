@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Pago;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pago;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PagoController extends Controller
@@ -12,7 +11,7 @@ class PagoController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $pagos = Pago::with('metodoPago')->where('user_id', $userId)
+        $pagos = Pago::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate(7);
 

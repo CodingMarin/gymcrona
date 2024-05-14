@@ -13,11 +13,10 @@ class Pago extends Model
 
     protected $fillable = [
         'id',
+        'user_id',
         'metodo_id',
-        'servicio_id',
-        'promocion_id',
+        'producto_servicio',
         'monto',
-        'created_at',
     ];
 
     public function metodoPago()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cliente;
 use App\Exports\ClientesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Cliente;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -83,10 +84,20 @@ class ClienteController extends Controller
 
     public function destroy($id)
     {
-        $cliente = Cliente::where('user_id', Auth::id())->findOrFail($id);
-        $cliente->delete();
+        try {
+            $cliente = Cliente::where('user_id', Auth::id())->findOrFail($id);
+            $cliente->delete();
 
-        return redirect()->route('cliente.index')->with('success', '¡Cliente eliminado correctamente!');
+            return redirect()->route('cliente.index')->with('success', '¡Cliente eliminado correctamente!');
+        } catch (QueryException $e) {
+            // Manejar el error de integridad referencial (1451)
+            if ($e->errorInfo[1] === 1451) {
+                return redirect()->back()->with('error', 'No se puede eliminar el cliente porque está siendo utilizado en inscripciones registradas.');
+            } else {
+                // Manejar otros errores de base de datos
+                return redirect()->back()->with('error', 'Error al intentar eliminar el cliente.');
+            }
+        }
     }
 
     public function export()

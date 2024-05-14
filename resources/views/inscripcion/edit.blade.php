@@ -60,7 +60,8 @@
 
                                     <!-- Nombre servicio -->
                                     <input type="text" class="form-control"
-                                        value="{{ $inscripcion->categoriaServicio->nombre }}" readonly>
+                                        value="{{ $inscripcion->categoriaServicio->nombre }}" name="servicio_nombre"
+                                        readonly>
                                 </div>
                                 <!-- Promoción -->
                                 <div class="col-md-6 mb-3 input-group-sm">
@@ -117,7 +118,7 @@
                                     <label for="pago_actual" class="form-label text-success fw-600">Pago actual
                                         (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="pago_actual"
-                                        name="pago_actual" placeholder="0.00" onchange="calcularDeuda()" />
+                                        name="pago_actual" placeholder="0.00" onchange="calcularDeuda()" required />
                                 </div>
 
                                 <!-- Método de Pago -->

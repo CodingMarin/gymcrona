@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CategoriaServicio;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoriaServicio;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,9 +64,19 @@ class CategoriaServicioController extends Controller
 
     public function destroy($id)
     {
-        $categoria = CategoriaServicio::where('user_id', Auth::id())->findOrFail($id);
-        $categoria->delete();
+        try {
+            $categoria = CategoriaServicio::where('user_id', Auth::id())->findOrFail($id);
+            $categoria->delete();
 
-        return redirect()->route('categoria.index')->with('success', '¡La categoría se ha eliminado correctamente!');
+            return redirect()->route('categoria.index')->with('success', '¡La categoría se ha eliminado correctamente!');
+        } catch (QueryException $e) {
+            // Manejar el error de integridad referencial (1451)
+            if ($e->errorInfo[1] === 1451) {
+                return redirect()->back()->with('error', 'No se puede eliminar la categoria porque está siendo utilizado en inscripciones registradas.');
+            } else {
+                // Manejar otros errores de base de datos
+                return redirect()->back()->with('error', 'Error al intentar eliminar el producto.');
+            }
+        }
     }
 }

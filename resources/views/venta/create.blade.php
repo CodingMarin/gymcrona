@@ -163,7 +163,7 @@
                                             <!-- Fin contenido -->
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-info btn-sm w-100">Realizar
+                                            <button type="submit" class="btn btn-info btn-sm w-100" style="z-index: 9999">Realizar
                                                 venta</button>
                                         </div>
                                     </div>

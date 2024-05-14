@@ -117,9 +117,8 @@ class InscripcionController extends Controller
         $pago = new Pago();
         $pago->user_id = $userId;
         $pago->metodo_id = $request->metodo_pago_id;
-        $pago->servicio_id = $request->servicio_id;
-        $pago->promocion_id = $request->promocion_id ?? null;
-        $pago->monto = $request->pago_actual;
+        $pago->producto_servicio = $request->servicio_nombre;
+        $pago->monto = $request->monto_pago;
         $pago->save();
 
         return redirect()->route('inscripcion.index')->with('success', 'Inscripción actualizada exitosamente.');
@@ -134,6 +133,7 @@ class InscripcionController extends Controller
             'numero_boleta' => 'nullable|string|max:11',
             'cliente_id' => 'required|exists:cliente,id',
             'servicio_id' => 'required|exists:categoria_servicio,id',
+            'servicio_nombre' => 'nullable|string',
             'promocion_id' => 'nullable|exists:promocion_servicio,id',
             'metodo_pago_id' => 'nullable|exists:metodo_pago,id',
             'estado_id' => 'required|exists:estado,id',
@@ -163,8 +163,7 @@ class InscripcionController extends Controller
         $pago = new Pago();
         $pago->user_id = $userId;
         $pago->metodo_id = $request->metodo_pago_id;
-        $pago->servicio_id = $request->servicio_id;
-        $pago->promocion_id = $request->promocion_id;
+        $pago->producto_servicio = $request->servicio_nombre;
         $pago->monto = $request->monto_pago;
         $pago->save();
 

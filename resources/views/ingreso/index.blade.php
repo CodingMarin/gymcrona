@@ -30,21 +30,9 @@
                                 </button>
                             </div>
                         @endif
-                        {{-- <div class="d-flex justify-content-between align-items-center mt-3">
-                            <p class="font-sm text-muted">
-                                Mostrando
-                                <span class="text-primary">{{ $clientes->firstItem() }}</span>
-                                -
-                                <span class="text-primary">{{ $clientes->lastItem() }}</span>
-                                de
-                                <span class="text-primary">{{ $totalClientes }}</span>
-                                clientes
-                            </p>
-                        </div> --}}
                         <thead class="">
                             <tr class="border-bottom" style="background-color: #e9f2ff">
                                 <th scope="col" class="font-sm fw-600 text-light-dark">Nº</th>
-                                <th scope="col" class="font-sm fw-600 text-light-dark">Imagen</th>
                                 <th scope="col" class="font-sm fw-600 text-light-dark">Metodo de pago</th>
                                 <th scope="col" class="font-sm fw-600 text-light-dark">Producto ó Servicio</th>
                                 <th scope="col" class="font-sm fw-600 text-light-dark">Monto</th>
@@ -64,8 +52,7 @@
                                                 alt="{{ $pago->metodoPago->brand->nombre }}">
                                         </picture>
                                     </td>
-                                    <td class="font-sm">{{ $pago->metodoPago->brand->nombre }}</td>
-                                    <td class="font-sm">Membresia: {{ $pago->promocionServicio->nombre }}</td>
+                                    <td class="font-sm">{{ $pago->producto_servicio }}</td>
                                     <td class="font-sm">S/.{{ $pago->monto }}</td>
                                     <td class="font-sm">{{ $pago->created_at }}</td>
                                 </tr>

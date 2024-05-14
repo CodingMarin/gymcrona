@@ -18,6 +18,15 @@
 
 @section('content')
     <div class="container">
+        <!-- Mostrar mensjae de error -->
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="card elevation-0 border">
             <div class="card-header d-flex justify-content-between align-items-center" style="gap: 5px">
                 <div class="input-group input-group-sm border rounded w-auto">

@@ -58,40 +58,44 @@
                                 <!-- Cliente -->
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="cliente_id" class="form-label font-sm fw-600">Cliente:</label>
-                                    <select class="custom-select form-select form-select-lg" id="servicio_id"
-                                        name="cliente_id" required>
-                                        <option value="">Seleccionar cliente</option>
+                                    <input type="hidden" id="cliente_id" name="cliente_id">
+                                    <input list="clientes" placeholder="Cliente" value="" class="form-control"
+                                        onchange="obtenerCliente(this.value)" required>
+                                    <datalist id="clientes">
                                         @foreach ($clientes as $cliente)
-                                            <option value="{{ $cliente->id }}">{{ $cliente->nombres }}
+                                            <option value="{{ $cliente->nombres }}" data-id={{ $cliente->id }}>
                                             </option>
                                         @endforeach
-                                    </select>
+                                    </datalist>
                                 </div>
                                 <!-- Servicio -->
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="categoria_id" class="form-label font-sm fw-600">Servicio/Area:</label>
-                                    <select class="custom-select form-select form-select-lg" id="servicio_id"
-                                        name="servicio_id" required>
-                                        <option value="">Seleccionar servicio</option>
+                                    <input type="hidden" id="servicio_id" name="servicio_id">
+                                    <input type="hidden" id="servicio_nombre" name="servicio_nombre">
+                                    <input list="servicios" placeholder="Servicio" value="" class="form-control"
+                                        onchange="obtenerNombreServicio(this.value)" required>
+                                    <datalist id="servicios">
                                         @foreach ($categoriasServicio as $categoria)
-                                            <option value="{{ $categoria->id }}">{{ $categoria->nombre }}
+                                            <option value="{{ $categoria->nombre }}" data-id="{{ $categoria->id }}">
                                             </option>
                                         @endforeach
-                                    </select>
+                                    </datalist>
                                 </div>
                                 <!-- Promoción -->
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="promocion_id" class="form-label font-sm fw-600">Promoción
                                         (opcional):</label>
-                                    <select class="custom-select form-select form-select-lg" name="promocion_id"
-                                        id="promocion_id">
-                                        <option value="">Seleccionar promoción</option>
+                                    <input type="hidden" id="promocion_id" name="promocion_id">
+                                    <input list="promociones" placeholder="Promociones" value="" class="form-control"
+                                        onchange="obtenerPromocionServicio(this.value)" required>
+                                    <datalist id="promociones">
                                         @foreach ($promocionServicio as $promocion)
-                                            <option value="{{ $promocion->id }}" data-precio="{{ $promocion->precio }}">
-                                                {{ $promocion->nombre }}
+                                            <option value="{{ $promocion->nombre }}" data-id="{{ $promocion->id }}"
+                                                data-precio="{{ $promocion->precio }}">
                                             </option>
                                         @endforeach
-                                    </select>
+                                    </datalist>
                                 </div>
                                 <!-- Fecha de emisión -->
 
@@ -218,10 +222,35 @@
         function obtenerPrecioPromocion() {
             const promocionSelect = document.getElementById('promocion_id');
             const precioInscripcionInput = document.getElementById('monto_costo');
+
             promocionSelect.addEventListener('change', function() {
                 const precioPromocion = parseFloat(this.options[this.selectedIndex].getAttribute('data-precio'));
                 precioInscripcionInput.value = precioPromocion.toFixed(2);
+
             });
+        }
+
+        function obtenerNombreServicio(filtro) {
+            const servicioSeleccionado = $("option[value='" + filtro + "']");
+            const nombre = servicioSeleccionado.attr('value');
+            const dataId = servicioSeleccionado.attr('data-id');
+
+            document.getElementById('servicio_nombre').value = nombre;
+            document.getElementById("servicio_id").value = dataId;
+        }
+
+        function obtenerCliente(filtro) {
+            const clienteSeleccionado = $("option[value='" + filtro + "']");
+            const dataId = clienteSeleccionado.attr('data-id');
+
+            document.getElementById("cliente_id").value = dataId;
+        }
+
+        function obtenerPromocionServicio(filtro) {
+            const promocionSeleccionado = $("option[value='" + filtro + "']");
+            const dataId = promocionSeleccionado.attr('data-id');
+
+            document.getElementById("promocion_id").value = dataId;
         }
         obtenerPrecioPromocion();
         calcularDeuda();

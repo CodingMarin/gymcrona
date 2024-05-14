@@ -16,6 +16,15 @@
 
 @section('content')
     <div class="container">
+        <!-- Mostrar mensjae de error -->
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center" style="gap: 5px">
                 <div class="input-group input-group-sm border rounded w-auto">
@@ -99,9 +108,9 @@
                                             <div class="btn-group" role="group" aria-label="Actions">
                                                 <a href="{{ route('promocion.edit', $promocion->id) }}"
                                                     class="mr-1 btn btn-success btn-sm rounded font-sm">
-                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="1" stroke-linecap="round"
-                                                        stroke-linejoin="round">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="1"
+                                                        stroke-linecap="round" stroke-linejoin="round">
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                         <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                                                         <path d="M13.5 6.5l4 4" />
