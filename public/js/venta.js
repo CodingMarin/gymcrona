@@ -128,7 +128,7 @@ document.getElementById('metodo_pago_id').addEventListener('change', function ()
     const imagen = metodoPagoSeleccionado.getAttribute("data-imagen");
 
     // Enviar el QR al checkout
-    $("#feature_img").attr('src', "{{ asset('/images/payments') }}/" + imagen);
+    $("#feature_img").attr('src', "../images/payments/" + imagen);
 });
 
 function abrirModal() {
