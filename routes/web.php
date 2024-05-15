@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
     ]);
 
     Route::resource('producto', ProductoController::class)->only([
-        'index', 'store', 'create', 'destroy'
+        'index', 'store', 'edit', 'update', 'destroy'
     ]);
 
     Route::resource('venta', VentaController::class)->only([
