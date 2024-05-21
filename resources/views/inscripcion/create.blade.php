@@ -19,19 +19,20 @@
 
 @section('content')
     <div class="container">
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                <picture>
-                    <img src="" alt="">
-                </picture>
+        <!-- Mostrar mensjae de error -->
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-    </div>
-    <div class="container">
+        @endif
         <div class="card">
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="card-body">
+                        <!-- Verificar si existen registros en metodo de pago -->
                         @if (!isset($metodoPago))
                             <div class="alert alert-dismissible fade show text-warning font-sm"
                                 style="background: rgba(243, 156, 18,.1); border: 1px solid rgba(243, 156, 18,.2);"
@@ -39,6 +40,20 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="font-sm">No tienes ningun metodo de pago configurado.</span>
                                     <a href="{{ route('metodo-pago.index') }}"
+                                        class="rounded border-warning btn btn-sm bg-warning text-decoration-none">
+                                        <span class="text-white">Ir </span>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        <!-- Verificar si existen registros en categoria servicio -->
+                        @if (!isset($categoriasServicio))
+                            <div class="alert alert-dismissible fade show text-warning font-sm"
+                                style="background: rgba(243, 156, 18,.1); border: 1px solid rgba(243, 156, 18,.2);"
+                                role="alert">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="font-sm">No tienes ninguna categeria de servicio registrada.</span>
+                                    <a href="{{ route('categoria.index') }}"
                                         class="rounded border-warning btn btn-sm bg-warning text-decoration-none">
                                         <span class="text-white">Ir </span>
                                     </a>
@@ -73,32 +88,41 @@
                                     <label for="categoria_id" class="form-label font-sm fw-600">Servicio/Area:</label>
                                     <input type="hidden" id="servicio_id" name="servicio_id">
                                     <input type="hidden" id="servicio_nombre" name="servicio_nombre">
-                                    <input list="servicios" placeholder="Servicio" value="" class="form-control"
-                                        onchange="obtenerNombreServicio(this.value)" required>
-                                    <datalist id="servicios">
-                                        @foreach ($categoriasServicio as $categoria)
-                                            <option value="{{ $categoria->nombre }}" data-id="{{ $categoria->id }}">
-                                            </option>
-                                        @endforeach
-                                    </datalist>
+                                    @if ($categoriasServicio->isEmpty())
+                                        <input type="text" placeholder="No hay servicios disponibles"
+                                            class="form-control" disabled>
+                                    @else
+                                        <input list="servicios" placeholder="Servicio" value="" class="form-control"
+                                            onchange="obtenerNombreServicio(this.value)" required>
+                                        <datalist id="servicios">
+                                            @foreach ($categoriasServicio as $categoria)
+                                                <option value="{{ $categoria->nombre }}" data-id="{{ $categoria->id }}">
+                                                </option>
+                                            @endforeach
+                                        </datalist>
+                                    @endif
                                 </div>
                                 <!-- Promoción -->
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="promocion_id" class="form-label font-sm fw-600">Promoción
                                         (opcional):</label>
                                     <input type="hidden" id="promocion_id" name="promocion_id">
-                                    <input list="promociones" placeholder="Promociones" value="" class="form-control"
-                                        onchange="obtenerPromocionServicio(this.value)" required>
-                                    <datalist id="promociones">
-                                        @foreach ($promocionServicio as $promocion)
-                                            <option value="{{ $promocion->nombre }}" data-id="{{ $promocion->id }}"
-                                                data-precio="{{ $promocion->precio }}">
-                                            </option>
-                                        @endforeach
-                                    </datalist>
+                                    @if ($promocionServicio->isEmpty())
+                                        <input list="promociones" placeholder="No hay promociones registradas"
+                                            class="form-control" disabled>
+                                    @else
+                                        <input list="promociones" id="promociones" placeholder="Promociones" value=""
+                                            class="form-control" onchange="obtenerPromocionServicio(this.value)" required>
+                                        <datalist id="promociones">
+                                            @foreach ($promocionServicio as $promocion)
+                                                <option value="{{ $promocion->nombre }}" data-id="{{ $promocion->id }}"
+                                                    data-precio="{{ $promocion->precio }}">
+                                                </option>
+                                            @endforeach
+                                        </datalist>
+                                    @endif
                                 </div>
                                 <!-- Fecha de emisión -->
-
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="fecha_emision" class="form-label font-sm fw-600">Fecha de emisión:</label>
                                     <input type="date" value="{{ now()->format('Y-m-d') }}" class="form-control"
@@ -108,16 +132,17 @@
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="fecha_caducidad" class="form-label font-sm fw-600">Fecha de
                                         caducidad:</label>
-                                    <input type="date" class="form-control" id="fecha_caducidad" name="fecha_caducidad"
-                                        required />
+                                    <input type="date" class="form-control" id="fecha_caducidad"
+                                        name="fecha_caducidad" required />
                                 </div>
-
+                                <!-- Precio inscripción -->
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="monto_costo" class="form-label font-sm fw-600">Precio de la Inscripcion
                                         (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_costo"
                                         name="monto_costo" placeholder="S/. 0.00" required />
                                 </div>
+                                <!-- Monto pagado -->
                                 <div class="input-group-sm col-md-4 mb-3">
                                     <label for="monto_pago" class="form-label font-sm fw-600">Monto Pagado (S/.):</label>
                                     <input type="number" step="0.01" class="form-control" id="monto_pago"
@@ -130,7 +155,7 @@
                                         id="metodo_pago_id" required>
                                         <option value="">Selecciona un metodo de pago</option>
                                         @foreach ($metodoPago as $metodo)
-                                            <option value="{{ $metodo->id }}">
+                                            <option value="{{ $metodo->id }}" data-imagen="{{ $metodo->foto_qr }}">
                                                 {{ $metodo->brand->nombre }}
                                             </option>
                                         @endforeach
@@ -157,11 +182,47 @@
                                         name="monto_deuda" placeholder="S/. 0.00" readonly />
                                 </div>
                             </div>
+                            <!-- Botón para continuar y abrir el modal de checkout -->
                             <div class="text-end modal-footer">
-                                <button type="submit" class="btn btn-outline-primary btn-sm"
+                                <button id="continuar_btn" class="btn btn-outline-primary btn-sm"
+                                    onclick="validarFormulario(event)"
                                     @if ($metodoPago->count() > 0) @else disabled @endif>
                                     Inscribir
                                 </button>
+                            </div>
+
+                            <!-- Modal de checkout -->
+                            <div class="modal fade" id="checkOutModal" tabindex="-1"
+                                aria-labelledby="checkOutModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body col-md-12 text-center">
+                                            <div class="container col-md-12 mx-auto mb-3">
+                                                <picture>
+                                                    <img id="feature_img" width="200" height="200"
+                                                        class="img-thumbnail border rounded" src=""
+                                                        alt="">
+                                                </picture>
+                                            </div>
+                                            <!-- Contenido -->
+                                            <div class="">
+                                                <h6 class="text-dark font-weight-bold">Cantidad a Pagar</h6>
+                                                <h3 class="display-4">S/.<span id="cantidad_total_pagar"></span></h3>
+                                            </div>
+                                            <!-- Fin contenido -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-info btn-sm w-100">Realizar
+                                                Inscripción</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -204,55 +265,6 @@
 @endsection
 
 @section('js')
-    <script>
-        function calcularDeuda() {
-            const precioInscripcion = parseFloat(document.getElementById('monto_costo').value);
-            const montoPagado = parseFloat(document.getElementById('monto_pago').value);
-
-            const deuda = precioInscripcion - montoPagado;
-            document.getElementById('monto_deuda').value = deuda;
-
-            if (montoPagado > precioInscripcion) {
-                document.getElementById('mensaje').innerText =
-                    'El monto pagado no puede ser mayor al precio de la inscripción.';
-                $('#notificacionModal').modal('show');
-            }
-        }
-
-        function obtenerPrecioPromocion() {
-            const promocionSelect = document.getElementById('promocion_id');
-            const precioInscripcionInput = document.getElementById('monto_costo');
-
-            promocionSelect.addEventListener('change', function() {
-                const precioPromocion = parseFloat(this.options[this.selectedIndex].getAttribute('data-precio'));
-                precioInscripcionInput.value = precioPromocion.toFixed(2);
-
-            });
-        }
-
-        function obtenerNombreServicio(filtro) {
-            const servicioSeleccionado = $("option[value='" + filtro + "']");
-            const nombre = servicioSeleccionado.attr('value');
-            const dataId = servicioSeleccionado.attr('data-id');
-
-            document.getElementById('servicio_nombre').value = nombre;
-            document.getElementById("servicio_id").value = dataId;
-        }
-
-        function obtenerCliente(filtro) {
-            const clienteSeleccionado = $("option[value='" + filtro + "']");
-            const dataId = clienteSeleccionado.attr('data-id');
-
-            document.getElementById("cliente_id").value = dataId;
-        }
-
-        function obtenerPromocionServicio(filtro) {
-            const promocionSeleccionado = $("option[value='" + filtro + "']");
-            const dataId = promocionSeleccionado.attr('data-id');
-
-            document.getElementById("promocion_id").value = dataId;
-        }
-        obtenerPrecioPromocion();
-        calcularDeuda();
-    </script>
+    <!-- Incluir los scripts desde inscripcion.partials.scripts -->
+    @include('inscripcion.partials.scripts')
 @endsection

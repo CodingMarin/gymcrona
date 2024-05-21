@@ -127,48 +127,52 @@ class InscripcionController extends Controller
     public function store(Request $request)
     {
 
-        $userId = Auth::id();
+        try {
+            $userId = Auth::id();
 
-        $request->validate([
-            'numero_boleta' => 'nullable|string|max:11',
-            'cliente_id' => 'required|exists:cliente,id',
-            'servicio_id' => 'required|exists:categoria_servicio,id',
-            'servicio_nombre' => 'nullable|string',
-            'promocion_id' => 'nullable|exists:promocion_servicio,id',
-            'metodo_pago_id' => 'nullable|exists:metodo_pago,id',
-            'estado_id' => 'required|exists:estado,id',
-            'fecha_emision' => 'required|date',
-            'fecha_caducidad' => 'required|date',
-            'monto_costo' => 'required|numeric',
-            'monto_pago' => 'nullable|numeric',
-            'monto_deuda' => 'nullable|numeric',
-        ]);
+            $request->validate([
+                'numero_boleta' => 'nullable|string|max:11',
+                'cliente_id' => 'required|exists:cliente,id',
+                'servicio_id' => 'required|exists:categoria_servicio,id',
+                'servicio_nombre' => 'nullable|string',
+                'promocion_id' => 'nullable|exists:promocion_servicio,id',
+                'metodo_pago_id' => 'nullable|exists:metodo_pago,id',
+                'estado_id' => 'required|exists:estado,id',
+                'fecha_emision' => 'required|date',
+                'fecha_caducidad' => 'required|date',
+                'monto_costo' => 'required|numeric',
+                'monto_pago' => 'nullable|numeric',
+                'monto_deuda' => 'nullable|numeric',
+            ]);
 
-        $inscripcion = new Inscripcion();
-        $inscripcion->user_id = $userId;
-        $inscripcion->numero_boleta = $request->numero_boleta ?? '000';
-        $inscripcion->cliente_id = $request->cliente_id;
-        $inscripcion->categoria_servicio_id = $request->servicio_id;
-        $inscripcion->promocion_servicio_id = $request->promocion_id ?? null;
-        $inscripcion->metodo_pago_id = $request->metodo_pago_id;
-        $inscripcion->estado_id = $request->estado_id;
-        $inscripcion->fecha_emision = $request->fecha_emision;
-        $inscripcion->fecha_caducidad = $request->fecha_caducidad;
-        $inscripcion->monto_costo = $request->monto_costo;
-        $inscripcion->monto_pago = $request->monto_pago;
-        $inscripcion->monto_deuda = $request->monto_deuda;
+            $inscripcion = new Inscripcion();
+            $inscripcion->user_id = $userId;
+            $inscripcion->numero_boleta = $request->numero_boleta ?? '000';
+            $inscripcion->cliente_id = $request->cliente_id;
+            $inscripcion->categoria_servicio_id = $request->servicio_id;
+            $inscripcion->promocion_servicio_id = $request->promocion_id ?? null;
+            $inscripcion->metodo_pago_id = $request->metodo_pago_id;
+            $inscripcion->estado_id = $request->estado_id;
+            $inscripcion->fecha_emision = $request->fecha_emision;
+            $inscripcion->fecha_caducidad = $request->fecha_caducidad;
+            $inscripcion->monto_costo = $request->monto_costo;
+            $inscripcion->monto_pago = $request->monto_pago;
+            $inscripcion->monto_deuda = $request->monto_deuda;
 
-        $inscripcion->save();
+            $inscripcion->save();
 
-        $pago = new Pago();
-        $pago->user_id = $userId;
-        $pago->metodo_id = $request->metodo_pago_id;
-        $pago->producto_servicio = $request->servicio_nombre;
-        $pago->monto = $request->monto_pago;
-        $pago->save();
+            $pago = new Pago();
+            $pago->user_id = $userId;
+            $pago->metodo_id = $request->metodo_pago_id;
+            $pago->producto_servicio = $request->servicio_nombre;
+            $pago->monto = $request->monto_pago;
+            $pago->save();
 
-        session()->flash('new_user_id', $inscripcion->id);
+            session()->flash('new_user_id', $inscripcion->id);
 
-        return redirect()->route('inscripcion.index')->with('success', 'Inscripción creada exitosamente.');
+            return redirect()->route('inscripcion.index')->with('success', 'Inscripción creada exitosamente.');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error al procesar la venta: ' . $e->getMessage());
+        }
     }
 }
