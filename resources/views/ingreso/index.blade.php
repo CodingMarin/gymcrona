@@ -18,66 +18,73 @@
 
 @section('content')
     <div class="container">
-        <div class="card">
+        <div class="card elevation-0 border">
             <div class="card-body">
-                <div class="table-responsive-lg table-borderless">
-                    <table class="table table-hover" id="clientes">
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('success') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-                        <thead class="">
-                            <tr class="border-bottom" style="background-color: #e9f2ff">
-                                <th scope="col" class="font-sm fw-600 text-light-dark">Nº</th>
-                                <th scope="col" class="font-sm fw-600 text-light-dark">Metodo de pago</th>
-                                <th scope="col" class="font-sm fw-600 text-light-dark">Producto ó Servicio</th>
-                                <th scope="col" class="font-sm fw-600 text-light-dark">Monto</th>
-                                <th scope="col" class="font-sm fw-600 text-light-dark">Fecha de ingreso</th>
-                            </tr>
-                        </thead>
-                        @php $i = 0 @endphp
-                        @foreach ($pagos as $pago)
-                            @php $i++ @endphp
-                            <tbody>
-                                <tr class="">
-                                    <td scope="row" class="font-sm text-muted">{{ $i }}</td>
-                                    <td class="font-sm">
-                                        <picture>
-                                            <img width="30"
-                                                src="{{ asset('images/brands/' . $pago->metodoPago->brand->logo) }}"
-                                                alt="{{ $pago->metodoPago->brand->nombre }}">
-                                        </picture>
-                                    </td>
-                                    <td class="font-sm">{{ $pago->producto_servicio }}</td>
-                                    <td class="font-sm">S/.{{ $pago->monto }}</td>
-                                    <td class="font-sm">{{ $pago->created_at }}</td>
-                                </tr>
-                            </tbody>
-                        @endforeach
-                    </table>
-                    {{-- {{ $clientes->links() }} --}}
-                </div>
+                {{-- Setup data for datatables --}}
+                @php
+                    $heads = ['Nº', 'Metodo de pago', 'Producto/Servicio', 'Monto', 'Fecha de ingreso'];
+
+                    $config = [
+                        'data' => [],
+                        'order' => [[1, 'asc']],
+                        'columns' => [
+                            ['title' => 'Nº', 'width' => 60],
+                            ['title' => 'Pago', 'width' => 60],
+                            ['title' => 'Producto/Servicio'],
+                            ['title' => 'Monto'],
+                            ['title' => 'Fecha de ingreso', 'width' => 250],
+                        ],
+                        'language' => [
+                            'sProcessing' => 'Procesando...',
+                            'sLengthMenu' => 'Mostrar _MENU_ registros',
+                            'sZeroRecords' => 'No se encontraron resultados',
+                            'sEmptyTable' => 'Ningún dato disponible en esta tabla',
+                            'sInfo' => 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+                            'sInfoEmpty' => 'Mostrando registros del 0 al 0 de un total de 0 registros',
+                            'sInfoFiltered' => '(filtrado de un total de _MAX_ registros)',
+                            'sInfoPostFix' => '',
+                            'sSearch' => 'Buscar:',
+                            'sUrl' => '',
+                            'sInfoThousands' => ',',
+                            'sLoadingRecords' => 'Cargando...',
+                            'oPaginate' => [
+                                'sFirst' => 'Primero',
+                                'sLast' => 'Último',
+                                'sNext' => 'Siguiente',
+                                'sPrevious' => 'Anterior',
+                            ],
+                            'oAria' => [
+                                'sSortAscending' => ': Activar para ordenar la columna de manera ascendente',
+                                'sSortDescending' => ': Activar para ordenar la columna de manera descendente',
+                            ],
+                            'buttons' => [
+                                'copy' => 'Copiar',
+                                'colvis' => 'Visibilidad',
+                                'print' => 'Imprimir',
+                            ],
+                        ],
+                    ];
+                    $i = 0;
+                    foreach ($pagos as $pago) {
+                        $i++;
+                        $imagen =
+                            ' <img width="30" src="' .
+                            asset('images/brands/' . $pago->metodoPago->brand->logo) .
+                            '" alt="' .
+                            $pago->metodoPago->brand->nombre .
+                            '"></picture>';
+
+                        $config['data'][] = [$i, $imagen, $pago->producto_servicio, $pago->monto, $pago->created_at];
+                    }
+                @endphp
+                {{-- Componente Datatable --}}
+                <x-adminlte-datatable id="tb_clientes" class="font-sm" :heads="$heads" head-theme="light"
+                    :config="$config" hoverable with-buttons />
             </div>
         </div>
     </div>
 @endsection
 
 @section('css')
-    <style>
-        .font-sm {
-            font-size: 0.938rem;
-        }
-
-        .fw-600 {
-            font-weight: 600;
-        }
-
-        .text-light-dark {
-            color: #172B4D;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 @endsection

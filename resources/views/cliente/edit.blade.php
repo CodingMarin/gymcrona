@@ -29,37 +29,37 @@
                             @method('PUT')
                             <div class="row">
                                 <!-- DNI -->
-                                <div class="col-md-4 mb-3">
+                                <div class="form-group input-group-sm col-md-4 mb-3">
                                     <label for="dni" class="form-label font-sm">DNI:</label>
                                     <input type="text" class="form-control" name="dni" maxlength="8"
                                         value="{{ $cliente->dni }}" />
                                 </div>
                                 <!-- Nombres -->
-                                <div class="col-md-4 mb-3">
+                                <div class="form-group input-group-sm col-md-4 mb-3">
                                     <label for="nombres" class="form-label font-sm">Nombres:</label>
                                     <input type="text" class="form-control" name="nombres" maxlength="50"
                                         value="{{ $cliente->nombres }}" />
                                 </div>
                                 <!-- Apellido paterno -->
-                                <div class="col-md-4 mb-3">
+                                <div class="form-group input-group-sm col-md-4 mb-3">
                                     <label for="ap_paterno" class="form-label font-sm">A. Paterno:</label>
                                     <input type="text" class="form-control" name="ap_paterno" maxlength="50"
                                         value="{{ $cliente->ap_paterno }}" />
                                 </div>
                                 <!-- Apellido materno -->
-                                <div class="col-md-4 mb-3">
+                                <div class="form-group input-group-sm col-md-4 mb-3">
                                     <label for="ap_materno" class="form-label font-sm">A. Materno:</label>
                                     <input type="text" class="form-control" name="ap_materno" maxlength="50"
                                         value="{{ $cliente->ap_materno }}" />
                                 </div>
                                 <!-- Teléfono -->
-                                <div class="col-md-4 mb-3">
+                                <div class="form-group input-group-sm col-md-4 mb-3">
                                     <label for="telefono" class="form-label font-sm">Teléfono (opcional):</label>
                                     <input type="text" class="form-control" id="telefono" name="telefono" maxlength="11"
                                         value="{{ $cliente->telefono }}" />
                                 </div>
                                 <!-- Correo -->
-                                <div class="col-md-4 mb-3">
+                                <div class="form-group input-group-sm col-md-4 mb-3">
                                     <label for="email" class="form-label font-sm">Email (opcional):</label>
                                     <input type="text" class="form-control" id="email" name="email"
                                         value="{{ $cliente->email }}" />

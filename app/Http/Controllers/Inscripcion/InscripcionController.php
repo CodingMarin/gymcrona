@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\CategoriaServicio;
 use App\Models\Cliente;
 use App\Models\Estado;
+use App\Models\GConfig;
 use App\Models\Pago;
 use App\Models\Inscripcion;
 use App\Models\MetodoPago;
 use App\Models\PromocionServicio;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\Exception\PrintException;
 
 class InscripcionController extends Controller
 {
@@ -83,7 +88,6 @@ class InscripcionController extends Controller
             ])
         );
     }
-
 
     public function update(Request $request, $id)
     {
@@ -173,6 +177,35 @@ class InscripcionController extends Controller
             return redirect()->route('inscripcion.index')->with('success', 'Inscripción creada exitosamente.');
         } catch (\Throwable $e) {
             return redirect()->back()->with('error', 'Ocurrió un error al procesar la venta: ' . $e->getMessage());
+        }
+    }
+
+    public function printTicket($id)
+    {
+        try {
+            $inscripcion = Inscripcion::findOrFail($id);
+            $gConfig = GConfig::where('user_id', Auth::user()->id)->first();
+            $nombreImpresora = $gConfig->name_printer;
+
+            $connector = new WindowsPrintConnector($nombreImpresora);
+            $impresora = new Printer($connector);
+            $impresora->setJustification(Printer::JUSTIFY_CENTER);
+            $impresora->setTextSize(2, 2);
+            $impresora->text("Detalle de Inscripción\n");
+            $impresora->text("--------------------------\n");
+            $impresora->setTextSize(1, 1);
+            $impresora->text("Cliente: " . $inscripcion->cliente->nombres . "\n");
+            $impresora->text("Servicio: " . $inscripcion->categoriaServicio->nombre . "\n");
+            $impresora->text("Promoción: " . ($inscripcion->promocionServicio ? $inscripcion->promocionServicio->nombre : 'Sin promoción') . "\n");
+            $impresora->text("Fecha Inicio: " . $inscripcion->fecha_emision . "\n");
+            $impresora->text("Fecha Vencimiento: " . $inscripcion->fecha_caducidad . "\n");
+            $impresora->text("Adelanto: S/." . $inscripcion->monto_pago . "\n");
+            $impresora->feed(5);
+            $impresora->close();
+
+            return redirect()->back()->with('success', 'El ticket se imprimió correctamente.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error al imprimir el ticket: ' . $e->getMessage());
         }
     }
 }

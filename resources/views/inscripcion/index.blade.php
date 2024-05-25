@@ -18,6 +18,14 @@
 
 @section('content')
     <div class="container">
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center" style="gap: 5px">
                 <!-- Filtrar -->
@@ -136,19 +144,22 @@
                                         <td class="font-sm">S/.{{ $inscripcion->monto_pago }}</td>
                                         <td class="font-sm text-danger">S/.{{ $inscripcion->monto_deuda }}</td>
                                         <td>
-                                            <a href="{{ route('inscripcion.edit', $inscripcion->id) }}"
-                                                class="mr-1 btn btn-success btn-sm rounded font-sm d-sm-none">
+                                            <a href="{{ route('generar_ticket', $inscripcion->id) }}"
+                                                class="mr-1 btn btn-info btn-sm rounded font-sm">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                                     stroke-linejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                                    <path d="M13.5 6.5l4 4" />
-                                                    <path d="M16 19h6" />
+                                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                                    <path
+                                                        d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                                    <path d="M9 7l1 0" />
+                                                    <path d="M9 13l6 0" />
+                                                    <path d="M13 17l2 0" />
                                                 </svg>
                                             </a>
                                             <a href="{{ route('inscripcion.edit', $inscripcion->id) }}"
-                                                class="mr-1 btn btn-success btn-sm rounded font-sm d-none d-sm-inline-flex">
+                                                class="mr-1 btn btn-success btn-sm rounded font-sm">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                                     stroke-linejoin="round">
@@ -157,7 +168,6 @@
                                                     <path d="M13.5 6.5l4 4" />
                                                     <path d="M16 19h6" />
                                                 </svg>
-                                                Editar
                                             </a>
                                         </td>
                                     </tr>

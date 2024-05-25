@@ -180,7 +180,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Nueva Promocion</h6>
+                        <h6 class="modal-title">Nueva Promoción</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -192,19 +192,19 @@
                             <div class="modal-body">
                                 <div class="form-group input-group-sm">
                                     <label for="nombre" class="font-sm fw-600">Nombre (promoción)</label>
-                                    <input type="text" class="form-control" placeholder="Promoción de servicio"
+                                    <input type="text" class="form-control" placeholder="Nombre de la promoción"
                                         id="nombre" name="nombre" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="descripcion" class="font-sm fw-600">Descripción</label>
-                                    <textarea class="form-control font-sm" placeholder="Describe a tu promoción" id="descripcion" name="descripcion"
+                                    <textarea class="form-control font-sm" placeholder="Describe tu promoción" id="descripcion" name="descripcion"
                                         rows="3" required></textarea>
                                 </div>
                                 <div class="row">
                                     <div class="form-group input-group-sm col-md-6">
                                         <label for="precio" class="font-sm fw-600">Precio S/.</label>
                                         <input class="form-control" id="precio" name="precio" type="number"
-                                            min="0.00" max="10000.00" step="0.01" required />
+                                            min="0.00" max="10000.00" step="0.01" placeholder="S/.0" required />
                                         @error('precio')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

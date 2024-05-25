@@ -194,7 +194,7 @@
                             @csrf
                             @method('POST')
                             <div class="modal-body">
-                                <div class="form-group">
+                                <div class="form-group input-group-sm">
                                     <label for="brand_id" class="font-sm">Marca</label>
                                     <select class="form-control" id="brand_id" name="brand_id" required>
                                         <option value="">Seleccione una marca</option>
@@ -252,19 +252,7 @@
 @endsection
 
 @section('css')
-    <style>
-        .font-sm {
-            font-size: 0.938rem;
-        }
-
-        .fw-600 {
-            font-weight: 600;
-        }
-
-        .text-light-dark {
-            color: #172B4D;
-        }
-    </style>
+    @include('metodo_pago.partials.styles')
 @endsection
 
 @section('js')

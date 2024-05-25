@@ -36,6 +36,19 @@ class HomeController extends Controller
         $inscripciones = Inscripcion::where('user_id', $user_id)->count();
         $ventas = Venta::where('user_id', $user_id)->count();
 
-        return view('home', compact('clientes', 'productos', 'inscripciones', 'ventas'));
+        // Obtener el total de ventas por día
+        $ventasPorDia = Venta::where('user_id', $user_id)
+            ->selectRaw('DATE(fecha_venta) as fecha, COUNT(id) as total_ventas')
+            ->groupBy('fecha')
+            ->orderBy('fecha')
+            ->get();
+
+        return view('home', compact([
+            'clientes',
+            'productos',
+            'inscripciones',
+            'ventas',
+            'ventasPorDia'
+        ]));
     }
 }

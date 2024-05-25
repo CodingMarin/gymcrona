@@ -61,7 +61,7 @@
                         <path d="M10 3v18" />
                         <path d="M16 19h6" />
                         <path d="M19 16v6" />
-                    </svg>&nbsp;Nueva Categoria</button>
+                    </svg>&nbsp;Nueva Categoría</button>
             </div>
             <div class="card-body">
                 <div class="table-responsive-md table-borderless">
@@ -178,7 +178,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Nueva categoria</h6>
+                        <h6 class="modal-title">Nueva categoría (Área)</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -188,12 +188,14 @@
                             @csrf
                             <div class="modal-body">
                                 <div class="form-group input-group-sm">
-                                    <label for="nombre" class="font-sm fw-600">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                    <label for="nombre" class="font-sm fw-600">Nombre (Área)</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                        placeholder="Nombre de la categoria (Área)" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="descripcion" class="font-sm fw-600">Descripción</label>
-                                    <textarea class="form-control font-sm" id="descripcion" name="descripcion" rows="3" required></textarea>
+                                    <textarea class="form-control font-sm" id="descripcion" name="descripcion" rows="3" placeholder="Descripción"
+                                        required></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">

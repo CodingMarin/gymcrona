@@ -6,11 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^2.2",
+        "intervention/image": "^3.6",
         "jeroennoten/laravel-adminlte": "^3.11",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
+        "luecano/numero-a-letras": "^3.0",
         "maatwebsite/excel": "^3.1",
+        "mike42/escpos-php": "^2.2",
         "phpoffice/phpspreadsheet": "^1.29"
     },
     "require-dev": {
