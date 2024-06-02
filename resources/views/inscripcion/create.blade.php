@@ -155,7 +155,8 @@
                                         id="metodo_pago_id" required>
                                         <option value="">Selecciona un metodo de pago</option>
                                         @foreach ($metodoPago as $metodo)
-                                            <option value="{{ $metodo->id }}" data-imagen="{{ $metodo->foto_qr }}">
+                                            <option value="{{ $metodo->id }}" data-nombre={{ $metodo->brand->nombre }}
+                                                data-imagen="{{ $metodo->foto_qr }}">
                                                 {{ $metodo->brand->nombre }}
                                             </option>
                                         @endforeach
@@ -213,7 +214,7 @@
                                             <!-- Contenido -->
                                             <div class="">
                                                 <h6 class="text-dark font-weight-bold">Cantidad a Pagar</h6>
-                                                <h3 class="display-4">S/.<span id="cantidad_total_pagar"></span></h3>
+                                                <h3 class="display-4">S/&nbsp;<span id="cantidad_total_pagar"></span></h3>
                                             </div>
                                             <!-- Fin contenido -->
                                         </div>

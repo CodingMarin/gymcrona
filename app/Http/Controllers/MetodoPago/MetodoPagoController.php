@@ -72,7 +72,7 @@ class MetodoPagoController extends Controller
             'foto_qr' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $imageName = null;
+        $imageName = 'no-image.png';
 
         // Manejar la subida de la imagen
         if ($request->hasFile('foto_qr')) {

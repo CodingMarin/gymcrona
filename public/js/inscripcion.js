@@ -45,9 +45,14 @@ document
         const metodoPagoSeleccionado = this.options[this.selectedIndex];
         const nombre = metodoPagoSeleccionado.getAttribute("data-nombre");
         const imagen = metodoPagoSeleccionado.getAttribute("data-imagen");
+        console.log("Metodo de pago seleccionado: %s", nombre);
 
-        // Enviar el QR al checkout
-        $("#feature_img").attr("src", "../images/payments/" + imagen);
+        if (nombre === "Efectivo" || nombre === "Tarjeta") {
+            $("#feature_img").addClass("d-none");
+        } else {
+            // Enviar el QR al checkout
+            $("#feature_img").attr("src", "../images/payments/" + imagen);
+        }
     });
 
 function abrirModal() {

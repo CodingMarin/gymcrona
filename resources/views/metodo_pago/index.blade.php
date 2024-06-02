@@ -103,36 +103,63 @@
                                     </td>
                                     <td class="font-sm">
                                         <picture>
-                                            <img width="100"
+                                            <img width="30"
                                                 src="{{ asset('images/payments/' . $metodoPago->foto_qr) }}"
                                                 alt="{{ $metodoPago->brand->nombre }}">
                                         </picture>
                                     </td>
                                     <td class="d-flex justify-content-center">
                                         <div class="btn-group" role="group" aria-label="Actions">
-                                            <a href="{{ route('metodo-pago.edit', $metodoPago->id) }}"
-                                                class="mr-1 btn btn-success btn-sm rounded font-sm d-sm-none">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                                    <path d="M13.5 6.5l4 4" />
-                                                    <path d="M16 19h6" />
-                                                </svg>
-                                            </a>
-                                            <a href="{{ route('metodo-pago.edit', $metodoPago->id) }}"
-                                                class="mr-1 btn btn-success btn-sm rounded font-sm d-none d-sm-inline-flex">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                                    <path d="M13.5 6.5l4 4" />
-                                                    <path d="M16 19h6" />
-                                                </svg>
-                                                Editar
-                                            </a>
+                                            @if ($metodoPago->brand->id == 3 || $metodoPago->brand->id == 4)
+                                                <button class="mr-1 btn btn-success btn-sm rounded font-sm d-sm-none"
+                                                    disabled>
+                                                    <svg width="20" height="20" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                        <path d="M16 19h6" />
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    class="mr-1 btn btn-success btn-sm rounded font-sm d-none d-sm-inline-flex"
+                                                    disabled>
+                                                    <svg width="20" height="20" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                        <path d="M16 19h6" />
+                                                    </svg>
+                                                    Editar
+                                                </button>
+                                            @else
+                                                <a href="{{ route('metodo-pago.edit', $metodoPago->id) }}"
+                                                    class="mr-1 btn btn-success btn-sm rounded font-sm d-sm-none">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                        <path d="M16 19h6" />
+                                                    </svg>
+                                                </a>
+                                                <a href="{{ route('metodo-pago.edit', $metodoPago->id) }}"
+                                                    class="mr-1 btn btn-success btn-sm rounded font-sm d-none d-sm-inline-flex">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                        <path d="M16 19h6" />
+                                                    </svg>
+                                                    Editar
+                                                </a>
+                                            @endif
                                             <div>
                                                 <button type="button" data-toggle="modal"
                                                     data-target="#eliminarMetodoPagoModal"
@@ -195,7 +222,7 @@
                             @method('POST')
                             <div class="modal-body">
                                 <div class="form-group input-group-sm">
-                                    <label for="brand_id" class="font-sm">Marca</label>
+                                    <label for="brand_id" class="font-sm">Metodo</label>
                                     <select class="form-control" id="brand_id" name="brand_id" required>
                                         <option value="">Seleccione una marca</option>
                                         @foreach ($brands as $brand)
@@ -222,32 +249,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Borrar metodo pago Modal -->
-        <div class="modal fade" id="eliminarMetodoPagoModal" tabindex="-1"
-            aria-labelledby="eliminarMetodoPagoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Eliminar metodo de pago</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="font-sm">¿Estás seguro de que deseas eliminar el metodo de pago?</p>
-                        <form id="borrarMetodoPagoForm" method="POST" action="">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn w-100 mb-2 btn-outline-secondary"
-                                data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn w-100 btn-outline-danger">Confirmar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        @include('metodo_pago.partials.delete_modal_payment')
     </div>
 @endsection
 
@@ -290,6 +292,16 @@
                 }
             });
         }
+
+        document.getElementById('brand_id').addEventListener('change', function() {
+            var qrField = document.getElementById('foto_qr');
+            if (this.value === '3' || this.value === '4') {
+                qrField.disabled = true;
+                qrField.value = '';
+            } else {
+                qrField.disabled = false;
+            }
+        });
 
         $('#eliminarMetodoPagoModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget);
